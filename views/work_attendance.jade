@@ -19,24 +19,25 @@ html
             //出席確認
             div.attendance_check(style='margin-top: 2%')
                 div.attendance_button
-                    button#entrance_button 入室確認
+                    form(method='post')
+                        button(type='submit' name='entrance_time')#entrance_button 入室確認
 
             div.attendance_reason
-                form
+                form(method='post')
                     div.attendance_label
                         label 遅刻の原因
                     div(style='width: 100%')
-                        textarea.attendance_text
+                        textarea(name='late_reason').attendance_text
                     div(style='width: 100%')
                         input(type='button' value='修正')
                         input(type='submit' value='送信')
 
             div.attendance_remark
-                form
+                form(method='post')
                     div.attendance_label
                         label リマーク
                     div(style='width: 100%')
-                        textarea.attendance_text
+                        textarea(name='late_remark').attendance_text
                     div(style='width: 100%')
                         input(type='button' value='修正')
                         input(type='submit' value='送信')
@@ -47,7 +48,7 @@ html
             //退室確認
             div.attendance_check(style='margin-top: 1%')
                 div.attendance_button
-                    button#leave_button 退室確認
+                    button(type='submit' name='leave_time')#leave_button 退室確認
 
             div.attendance_reason
                 form
