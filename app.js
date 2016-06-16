@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -18,7 +19,23 @@ var opinion = require('./routes/opinion');
 
 var test = require('./routes/test');
 
+var MemcachedStore = require('connect-memcached')(session);
+
 var app = express();
+
+
+app.use(cookieParser('パスフレーズ'));
+
+/*
+app.use(session({
+    key: 'sid',
+    cookie: {},
+    store: new MemcachedStore(),
+    resave: true,
+    saveUninitialized: true,
+    secret: 'mysecretkey'
+}));
+*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

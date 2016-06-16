@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res) {
+
+    console.log('hello');
+
     res.render('signup');
 });
 
@@ -27,7 +30,7 @@ router.post('/',function (req,res) {
 
                     if(docs.length!=0){
                         console.log('this user is registered already!');
-                        res.render('signup');
+                        res.redirect('/signup');
                     }else{
                         collection.insert(user, function(err, result){
 
