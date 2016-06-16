@@ -1,0 +1,39 @@
+//
+   Created by mamol on 16/06/14.
+
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        title 学員行動基準評定
+        //Import jQuery
+        include jQuery_import.jade
+        //Import validation
+        //include jQuery_function
+        //+jQuery_function('#user_login')
+
+        //Import script & css
+        link(rel='stylesheet' type='text/css' href='/stylesheets/login.css')
+        script(type='text/javascript' src='/javascripts/validation.js')
+
+    body
+        include top.jade
+        div
+            div.login_title
+                h1 学員行動基準評定ユーザー登録システム
+            form#user_login(method='post')
+                div.login_text
+                    div.login_label
+                        label メール:
+                    div.login_input
+                        input#login_username(class='validate[required,custom[email]]' type='text' name='username' placeholder='Email')
+                div.login_text
+                    div.login_label
+                        label パスワード:
+                    div.login_input
+                        input#login_password(class='validate[required]' type='password' name='password' placeholder='Password')
+                div.login_text
+                    div.login_submit
+                        input#login_submit(type='submit' value='登録')
+                    div.login_new
+                        a(href='/signup/') Click here to sign up

@@ -1,0 +1,33 @@
+.top{
+    position: static;
+    opacity: 1;
+    background-color: #40B3DF;
+    height: 200px;
+}
+
+.logo{
+    color: crimson;
+    position: absolute;
+    font-weight: bolder;
+    font-size: 80px;
+}
+
+.side_bar{
+    float: left;
+    width: 15%;
+    height: 1954px;
+    opacity: 1;
+    background-color: coral;
+}
+
+.side_list{
+    position: relative;
+    left: 20px;
+    text-align: left;
+}
+
+.box{
+    float: left;
+    width: 80%;
+    margin-left: 2.5%;
+}

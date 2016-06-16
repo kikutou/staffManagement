@@ -1,0 +1,32 @@
+//
+   Created by mamol on 16/06/16.
+doctype
+html
+    head
+        title 社長直通
+        meta(charset='UTF-8')
+        //Import jQuery
+        include jQuery_import.jade
+        //Import script & css
+        link(rel='styleSheet' type='text/css' href='/stylesheets/opinion.css')
+
+    body
+        include top.jade
+        include side_bar
+        div.box
+            form
+                ul
+                    li 先生、先輩及び直接担当者に要望したいこと、改善してほしいこと
+                        br
+                        textarea(placeholder='あなたの意見を書いてください')
+                        hr
+                    li 今後、２～３年間にあなたが担当したい職務内容、又は自己の進みたい方向など
+                        br
+                        textarea(placeholder='あなたの希みを書いてください')
+                        hr
+                    li 会社に対する感想や意見や希望
+                        br
+                        textarea(placeholder='あなたの感想を書いてください')
+                        hr
+                br
+                input.opinion_submit(type='submit' value='送信')

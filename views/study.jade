@@ -1,0 +1,64 @@
+//
+   Created by mamol on 16/06/14.
+doctype html
+html
+    head
+        title 学習内容
+        meta(charset='UTF-8')
+        //Import jQuery
+        include jQuery_import.jade
+        //DatePicker
+        script(type='text/javascript' src='/javascripts/datepicker.js')
+        //Import script & css
+        style.
+            table{border-collapse: collapse;}
+            table, th, td{border: 1px solid black;}
+            td{text-align: center;}
+        link(rel='stylesheet' type='text/css' href='/stylesheets/study.css')
+
+    body
+        include top.jade
+        include side_bar
+
+        div.box
+            div.study_table
+                form
+                    div
+                        table
+                            tr
+                                th 日期
+                                th 学習内容
+                                th 自己評価
+                            tr
+                                td: input.study_date(type='date')
+                                td: textarea
+                                td: textarea
+                            tr
+                                td: input.study_date(type='date')
+                                td: textarea
+                                td: textarea
+                            tr
+                                td: input.study_date(type='date')
+                                td: textarea
+                                td: textarea
+                            tr
+                                td: input.study_date(type='date')
+                                td: textarea
+                                td: textarea
+                            tr
+                                td: input.study_date(type='date')
+                                td: textarea
+                                td: textarea
+                            tr
+                                td: input.study_date(type='date')
+                                td: textarea
+                                td: textarea
+                            tr
+                                td: input.study_date(type='date')
+                                td: textarea
+                                td: textarea
+                    div.study_button
+                        div.study_submit
+                            input(type='submit' value='確認')
+                        div.study_modify
+                            input(type='button' value='修正')

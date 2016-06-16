@@ -1,0 +1,24 @@
+.study_table{
+    float: right;
+    width: 80%;
+    margin-right: 3%;
+    margin-top: 1%;
+}
+
+.study_date{
+    width: 47%;
+    text-align: center;
+}
+
+.study_button{
+    margin-top: 2%;
+}
+
+.study_modify{
+    float: right;
+    margin-right: 1%;
+}
+
+.study_submit{
+    float: right;
+}

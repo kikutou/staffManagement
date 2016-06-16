@@ -1,0 +1,70 @@
+//
+   Created by mamol on 16/06/14.
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        title 出席確認
+        //Import jQuery
+        include jQuery_import.jade
+        //Import script & css
+        script(type='text/javascript' src='/javascripts/attendanceTime.js')
+        link(rel='stylesheet' type='text/css' href='/stylesheets/attendance.css')
+
+    body
+        include top.jade
+        include side_bar.jade
+
+        div.box
+            //出席確認
+            div.attendance_check(style='margin-top: 2%')
+                div.attendance_button
+                    button#entrance_button 入室確認
+
+            div.attendance_reason
+                form
+                    div.attendance_label
+                        label 遅刻の原因
+                    div(style='width: 100%')
+                        textarea.attendance_text
+                    div(style='width: 100%')
+                        input(type='button' value='修正')
+                        input(type='submit' value='送信')
+
+            div.attendance_remark
+                form
+                    div.attendance_label
+                        label リマーク
+                    div(style='width: 100%')
+                        textarea.attendance_text
+                    div(style='width: 100%')
+                        input(type='button' value='修正')
+                        input(type='submit' value='送信')
+
+            br
+            hr
+
+            //退室確認
+            div.attendance_check(style='margin-top: 1%')
+                div.attendance_button
+                    button#leave_button 退室確認
+
+            div.attendance_reason
+                form
+                    div.attendance_label
+                        label 早退の原因
+                    div(style='width: 100%')
+                        textarea.attendance_text
+                    div(style='width: 100%')
+                        input(type='button' value='修正')
+                        input(type='submit' value='送信')
+
+            div.attendance_remark
+                form
+                    div.attendance_label
+                        label リマーク
+                    div(style='width: 100%')
+                        textarea.attendance_text
+                    div(style='width: 100%')
+                        input(type='button' value='修正')
+                        input(type='submit' value='送信')

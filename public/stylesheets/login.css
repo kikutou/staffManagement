@@ -1,0 +1,43 @@
+.login_title{
+    width: 100%;
+    color: #15428B;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.login_text{
+    width: 80%;
+    float: left;
+    margin-left: 10%;
+    margin-top: 1%;
+}
+
+.login_label{
+    width: 39%;
+    float: left;
+    text-align: right;
+}
+
+.login_input{
+    width: 60%;
+    float: right;
+    text-align: left;
+}
+
+.login_button{
+    width: 100%;
+    float: left;
+    margin-left: 40%;
+}
+
+.login_submit{
+    margin-left: 40%;
+    float: left;
+}
+
+.login_new{
+    float: left;
+    margin-left: 2%;
+    margin-top: 1%;
+    font-size: smaller;
+}

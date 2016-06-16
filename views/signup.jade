@@ -1,0 +1,183 @@
+//
+   Created by mamol on 16/06/13.
+
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        title 新規作成
+        //Import jQuery
+        include jQuery_import.jade
+        //Import script & css
+        script(type='text/javascript' src='/javascripts/sign_up_vaditation.js')
+        link(rel='stylesheet' type='text/css' href='/stylesheets/sign_up_list.css')
+
+    body
+        include top.jade
+        br
+
+        //input page
+        div(align='center' style='marginTop: 3%')
+            form#user_sign_up(method='post')
+                div#signup_massage
+                    div.sign_up_list
+                        div.list_label
+                            label 社員名
+                        div.list_text
+                            input#staff_name(class='validate[required]' type='text' name='staff_name')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 性別
+                        div.list_text
+                            select#staff_sex(class='validate[required]' name='staff_sex')
+                                option
+                                option 男性
+                                option 女性
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 生年月日
+                        div.list_text
+                            input#staff_birthday(class='validate[required,custom[date]]' type='date' name='staff_birthday')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 社員メール
+                        div.list_text
+                            input#staff_email(class='validate[required,custom[email]]' type='text' name='staff_email')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label パスワード
+                        div.list_text
+                            input#staff_password(class='validate[required,minSize[8],maxSize[20]]' type='password' name='staff_password')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label パスワード確認
+                        div.list_text
+                            input#staff_password_confirm(class='validate[required,equals[staff_password]]' type='password' name='staff_password_confirm')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 電話番号
+                        div.list_text
+                            input#staff_tel(class='validate[required,custom[number]]' type='text' name='staff_tel')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 住所
+                        div.list_text
+                            input#staff_address(class='validate[required]' type='text' name='staff_address')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 入社日
+                        div.list_text
+                            input#staff_signup_date(class='validate[required]' type='date' name='staff_signup_date')
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 区分
+                        div.list_text
+                            select#staff_occupation(class='validate[required]' name='staff_occupation')
+                                option
+                                option 管理者
+                                option 普通社員
+                        br
+                        br
+
+                    div.sign_up_list
+                        div.list_text
+                            input#signup_submit(type='button' value='確認')
+
+                //confirm page
+                div#signup_confirm(align='center' style='margin-top: 3%' hidden)
+                    div.sign_up_list
+                        div.list_label
+                            label 社員名
+                        div.list_text
+                            span#staff_name_check
+                    br
+                    br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 性別
+                        div.list_text
+                            span#staff_sex_check
+                    br
+                    br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 生年月日
+                        div.list_text
+                            span#staff_birthday_check
+                    br
+                    br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 社員メール
+                        div.list_text
+                            span#staff_email_check
+                    br
+                    br
+
+
+                    div.sign_up_list
+                        div.list_label
+                            label 電話番号
+                        div.list_text
+                            span#staff_tel_check
+                    br
+                    br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 住所
+                        div.list_text
+                            span#staff_address_check
+                    br
+                    br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 入社日
+                        div.list_text
+                            span#staff_signup_date_check
+                    br
+                    br
+
+                    div.sign_up_list
+                        div.list_label
+                            label 区分
+                        div.list_text
+                            span#staff_occupation_check
+                    br
+                    br
+
+                    div.sign_up_list
+                        div.list_text
+                            input(type='submit' value='確認')
+                            input#staff_massage_confirm(type='button' value='修正')

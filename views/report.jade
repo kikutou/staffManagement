@@ -1,0 +1,171 @@
+//
+   Created by mamol on 16/06/15.
+doctype html
+html
+    head
+        title 勤怠報告&研修
+        meta(charset='UTF-8')
+        //Import jQuery
+        include jQuery_import.jade
+        //Import script & css
+        link(rel='styleSheet' type='text/css' href='/stylesheets/report.css')
+
+    body
+        include top.jade
+        include side_bar
+
+        div.box
+            div.report_title
+                h3 現在の学習内容についてあなたの気持
+                hr
+
+            div
+                form
+                    div.report_head
+                        label.report_label 質的に
+                    div.report_list
+                        input(type='radio' name='quality')
+                        | 1234
+                        br
+                        input(type='radio' name='quality')
+                        | やや高い
+                        br
+                        input(type='radio' name='quality')
+                        | 適当
+                        br
+                        input(type='radio' name='quality')
+                        | やや低い
+                        br
+                        input(type='radio' name='quality')
+                        | 低い
+
+                    div.report_head
+                        label.report_label 量的に
+                    div.report_list
+                        input(type='radio' name='quantity')
+                        | 多すぎる
+                        br
+                        input(type='radio' name='quantity')
+                        | やや多い
+                        br
+                        input(type='radio' name='quantity')
+                        | 適当
+                        br
+                        input(type='radio' name='quantity')
+                        | やや少ない
+                        br
+                        input(type='radio' name='quantity')
+                        | 少ない
+
+                    div.report_head
+                        label.report_label 興味
+                    div.report_list
+                        input(type='radio' name='interest')
+                        | 非常にある
+                        br
+                        input(type='radio' name='interest')
+                        | かなりある
+                        br
+                        input(type='radio' name='interest')
+                        | 普通
+                        br
+                        input(type='radio' name='interest')
+                        | あまりない
+                        br
+                        input(type='radio' name='interest')
+                        | ほとんどない
+
+                    div.report_head
+                        label.report_label あなたの能力
+                    div.report_list
+                        input(type='radio' name='ability')
+                        | 十分活用できる
+                        br
+                        input(type='radio' name='ability')
+                        | だいたい活用できる
+                        br
+                        input(type='radio' name='ability')
+                        | まあまあ活用できる
+                        br
+                        input(type='radio' name='ability')
+                        | あまり活用できない
+                        br
+                        input(type='radio' name='ability')
+                        | 全く活用できない
+
+                    div.report_head
+                        label.report_label あなたの適性に
+                    div.report_list
+                        input(type='radio' name='aptitude')
+                        | 非常に適している
+                        br
+                        input(type='radio' name='aptitude')
+                        | 大体適している
+                        br
+                        input(type='radio' name='aptitude')
+                        | 普通
+                        br
+                        input(type='radio' name='aptitude')
+                        | あまり適していない
+                        br
+                        input(type='radio' name='aptitude')
+                        | 適していない
+
+                    div.report_title
+                        h3 自己の向上があったと思われるもの
+                        hr
+
+                    div.report_head
+                        label.report_label 専門知識技能
+                    div.report_list
+                        div.report_check1
+                            input(type='checkbox' name='Expert')
+                            | 分析力
+                        div.report_check2
+                            input(type='checkbox' name='Expert')
+                            | 決断力
+                        div.report_check3
+                            input(type='checkbox' name='Expert')
+                            | 理解判断力
+
+                    div.report_head
+                        label.report_label 一般知識技能
+                    div.report_list
+                        div.report_check1
+                            input(type='checkbox' name='skill')
+                            | 創造力
+                        div.report_check2
+                            input(type='checkbox' name='skill')
+                            | 実行力
+                        div.report_check3
+                            input(type='checkbox' name='skill')
+                            | 問題意識
+
+                    div.report_head
+                        label.report_label 業務処理力
+                    div.report_list
+                        div.report_check1
+                            input(type='checkbox' name='business')
+                            | 企画立案力
+                        div.report_check2
+                            input(type='checkbox' name='business')
+                            | 折衛調整力
+                        div.report_check3
+                            input(type='checkbox' name='business')
+                            | 健康
+
+                    div.report_head
+                        label.report_label 計数的能力
+                    div.report_list
+                        div.report_check1
+                            input(type='checkbox' name='rule')
+                            | 指導統卒力
+                        div.report_check2
+                            input(type='checkbox' name='rule')
+                            | 対応力
+                        div.report_check3
+                            input(type='checkbox' name='rule')
+                            | 人間の幅
+
+                    div.report_submit
+                        input(type='submit' value='送信' style='font-size: 25px')

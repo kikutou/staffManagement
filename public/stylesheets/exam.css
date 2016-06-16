@@ -1,0 +1,14 @@
+.exam_label{
+    float: left;
+    margin-left: 3%;
+}
+
+.exam_number{
+    float: right;
+    margin-right: 3%;
+}
+
+.exam_table{
+    float: left;
+    width: 100%;
+}
