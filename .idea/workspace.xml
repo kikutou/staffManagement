@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc635f96-564b-41ae-8dd4-1d456a028c6a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/study.css" afterPath="$PROJECT_DIR$/public/stylesheets/study.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/login.js" afterPath="$PROJECT_DIR$/routes/login.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/signup.js" afterPath="$PROJECT_DIR$/routes/signup.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/work_attendance.js" afterPath="$PROJECT_DIR$/routes/work_attendance.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/OJTcard.jade" afterPath="$PROJECT_DIR$/views/OJTcard.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/study.jade" afterPath="$PROJECT_DIR$/views/study.jade" />
     </list>
     <ignored path="staffManagement.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,8 +26,18 @@
       <file leaf-file-name="work_attendance.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/work_attendance.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="263">
+              <caret line="28" column="35" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sign_up_vaditation.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/javascripts/sign_up_vaditation.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -78,13 +82,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/views/work_attendance.jade" />
-        <option value="$PROJECT_DIR$/public/javascripts/attendanceTime.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/routes/login.js" />
         <option value="$PROJECT_DIR$/routes/signup.js" />
         <option value="$PROJECT_DIR$/views/study.jade" />
         <option value="$PROJECT_DIR$/public/stylesheets/study.css" />
         <option value="$PROJECT_DIR$/views/OJTcard.jade" />
+        <option value="$PROJECT_DIR$/public/javascripts/attendanceTime.js" />
         <option value="$PROJECT_DIR$/routes/work_attendance.js" />
       </list>
     </option>
@@ -207,10 +211,6 @@
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -291,12 +291,12 @@
       <workItem from="1466071421791" duration="582000" />
       <workItem from="1466072174903" duration="5472000" />
       <workItem from="1466079523572" duration="2557000" />
-      <workItem from="1466131251261" duration="15690000" />
+      <workItem from="1466131251261" duration="19579000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24301000" />
+    <option name="totallyTimeSpent" value="28190000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1345" y="-4" width="1535" height="904" extended-state="6" />
@@ -555,14 +555,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/datepicker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/jQuery_import.jade">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -587,10 +579,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/attendanceTime.js">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/datepicker.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/sign_up_vaditation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -603,10 +603,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/attendanceTime.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/work_attendance.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="263">
+          <caret line="28" column="35" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
           <folding />
         </state>
       </provider>
