@@ -24,9 +24,9 @@ router.post('/',function (req,res) {
 
             var user = req.body;
 
-            var collection = db.collection('users');
+            var col_users = db.collection('users');
 
-            collection.find({staff_email: user.username, staff_password: user.password}).toArray(function (err,docs) {
+            col_users.find({staff_email: user.username, staff_password: user.password}).toArray(function (err,docs) {
 
                     console.log(docs);
 
