@@ -19,13 +19,25 @@ router.post('/',function (req, res) {
             throw err
         }else {
             var attendance = req.body;
-            var collection = db.collection('attendance');
+            var col_attendance = db.collection('attendance');
+            var col_users = db.collection('users');
 
-            collection.insert(attendance, function (err, result) {
+            col_attendance.insert(attendance, function (err, result) {
                 if (err){
                     throw err;
                 }else {
-                    res.send(result);
+                    var entrance_time = col_attendance.find({entrance_time: attendance.entrance_time}, {_id: 1});
+                    col_users.update(
+                        {staff_email: 'maozedong@gmail.com'},
+                        {$set: {En_Time_id: entrance_time}},
+                        {
+                            upsert: true,
+                            multi: true
+                        }
+                    );
+                    col_users.find().toArray(function (err, doc) {
+                        console.log(doc);
+                    })
                 }
             })
         }

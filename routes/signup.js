@@ -24,9 +24,9 @@ router.post('/',function (req,res) {
 
             var user = req.body;
 
-            var collection = db.collection('users');
+            var col_users = db.collection('users');
 
-            collection.find({staff_email: user.staff_email}).toArray(function (err,docs) {
+            col_users.find({staff_email: user.staff_email}).toArray(function (err,docs) {
 
                     if(docs.length!=0){
                         console.log('this user is registered already!');
@@ -37,7 +37,8 @@ router.post('/',function (req,res) {
                             if(err){
                                 console.log('err in insert');
                             }else{
-                                res.send(result);
+                                console.log('Sign Up Success');
+                                res.render('login')
                             }
 
                         });

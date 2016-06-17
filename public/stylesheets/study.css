@@ -1,17 +1,33 @@
+table{
+    border-collapse: collapse; width: 100%
+}
+
+table, th, td{
+    border: 1px solid black;
+}
+
+td{
+    text-align: center;  width: auto
+}
+
 .study_table{
-    float: right;
-    width: 80%;
-    margin-right: 3%;
-    margin-top: 1%;
+    float: left;
+    width: 100%;
+    margin-top: 2%;
 }
 
 .study_date{
-    width: 47%;
+    width: 90%;
     text-align: center;
 }
 
-.study_button{
-    margin-top: 2%;
+.study_text{
+    width: 94%;
+}
+
+.study_block{
+    width: 100%;
+    margin-top: 1%;
 }
 
 .study_modify{
@@ -21,4 +37,14 @@
 
 .study_submit{
     float: right;
+}
+
+.study_label{
+    font-size: large;
+    font-weight: bold;
+}
+
+.study_evaluation{
+    width: 99%;
+    height: 200px;
 }
