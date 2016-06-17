@@ -12,18 +12,19 @@
             var dateStr = year+"/"+month+"/"+day+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+hour+":"+minute+":"+second;
             var dateTime = hour+":"+minute+":"+second;
 
+            $("#entrance_button").val(dateTime);
+            $("#leave_button").val(dateTime);
+
             // show localtime
             $("#entrance_button").mouseenter(
                 function () {
                     $(this).html("現在の時間："+dateStr);
-                    $("#entrance_button").val(dateTime);
                 }
             );
 
             $("#leave_button").mouseenter(
                 function(){
                     $(this).html("現在の時間："+dateStr);
-                    $("#leave_button").val(dateTime);
                 });
 
             // hide localtime

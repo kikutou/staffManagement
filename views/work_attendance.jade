@@ -48,24 +48,25 @@ html
             //退室確認
             div.attendance_check(style='margin-top: 1%')
                 div.attendance_button
-                    button(type='submit' name='leave_time')#leave_button 退室確認
+                    form(method='post')
+                        button(type='submit' name='leave_time')#leave_button 退室確認
 
             div.attendance_reason
-                form
+                form(method='post')
                     div.attendance_label
                         label 早退の原因
                     div(style='width: 100%')
-                        textarea.attendance_text
+                        textarea(name='leave_reason').attendance_text
                     div(style='width: 100%')
                         input(type='button' value='修正')
                         input(type='submit' value='送信')
 
             div.attendance_remark
-                form
+                form(method='post')
                     div.attendance_label
                         label リマーク
                     div(style='width: 100%')
-                        textarea.attendance_text
+                        textarea(name='leave_remark').attendance_text
                     div(style='width: 100%')
                         input(type='button' value='修正')
                         input(type='submit' value='送信')

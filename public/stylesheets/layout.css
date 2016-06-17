@@ -12,6 +12,12 @@
     font-size: 80px;
 }
 
+.logout{
+    float: right;
+    margin-right: 1%;
+    margin-top: 3%;
+}
+
 .side_bar{
     float: left;
     width: 15%;
