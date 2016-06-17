@@ -37,8 +37,8 @@ router.post('/',function (req,res) {
                         res.send(err)
                     }else{
                         console.log('Login success');
-                        //req.session.user = docs;
-                        res.render('work_attendance');
+                        req.session.user = docs[0];
+                        res.redirect('/work_attendance');
                     }
                 }
             );

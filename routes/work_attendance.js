@@ -6,7 +6,13 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-    res.render('work_attendance');
+
+    if(req.session.user){
+        res.render('work_attendance');
+    }else{
+        res.redirect('/login');
+    }
+
 });
 
 router.post('/',function (req, res) {
@@ -28,7 +34,7 @@ router.post('/',function (req, res) {
                 }else {
                     //Entrance Time
                     col_users.update(
-                        {staff_email: 'maozedong@gmail.com'},
+                        {staff_email: req.session.user.staff_email},
                         {$set: {En_Time_id: attendance['_id']}},
                         {
                             upsert: true,
@@ -40,7 +46,7 @@ router.post('/',function (req, res) {
                             console.log(docs);
                         });
                         console.log(doc);
-                    res.render('work_attendance')
+                        res.render('work_attendance')
                     })
                 }
             })

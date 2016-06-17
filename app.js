@@ -19,14 +19,15 @@ var opinion = require('./routes/opinion');
 
 var test = require('./routes/test');
 
+var app = express();
 var MemcachedStore = require('connect-memcached')(session);
 
-var app = express();
+
 
 
 app.use(cookieParser('パスフレーズ'));
 
-/*
+
 app.use(session({
     key: 'sid',
     cookie: {},
@@ -35,7 +36,7 @@ app.use(session({
     saveUninitialized: true,
     secret: 'mysecretkey'
 }));
-*/
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
