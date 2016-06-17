@@ -26,17 +26,21 @@ router.post('/',function (req, res) {
                 if (err){
                     throw err;
                 }else {
-                    var entrance_time = col_attendance.find({entrance_time: attendance.entrance_time}, {_id: 1});
+                    //Entrance Time
                     col_users.update(
                         {staff_email: 'maozedong@gmail.com'},
-                        {$set: {En_Time_id: entrance_time}},
+                        {$set: {En_Time_id: attendance['_id']}},
                         {
                             upsert: true,
                             multi: true
                         }
                     );
                     col_users.find().toArray(function (err, doc) {
+                        col_attendance.find({entrance_time: attendance.entrance_time}).toArray(function (err, docs) {
+                            console.log(docs);
+                        });
                         console.log(doc);
+                    res.render('work_attendance')
                     })
                 }
             })
