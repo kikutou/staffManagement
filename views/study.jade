@@ -29,34 +29,15 @@ html
                                 th 日期
                                 th 学習内容
                                 th 自己評価
-                            tr
-                                td: input.study_date(type='date')
-                                td: textarea
-                                td: textarea
-                            tr
-                                td: input.study_date(type='date')
-                                td: textarea
-                                td: textarea
-                            tr
-                                td: input.study_date(type='date')
-                                td: textarea
-                                td: textarea
-                            tr
-                                td: input.study_date(type='date')
-                                td: textarea
-                                td: textarea
-                            tr
-                                td: input.study_date(type='date')
-                                td: textarea
-                                td: textarea
-                            tr
-                                td: input.study_date(type='date')
-                                td: textarea
-                                td: textarea
-                            tr
-                                td: input.study_date(type='date')
-                                td: textarea
-                                td: textarea
+                            mixin tbdata(weeks)
+                                tr
+                                    td: input.study_date(type='date' name='study_date'+weeks)
+                                    td: textarea(name='study_content'+weeks)
+                                    td: textarea(name='self_evaluation'+weeks)
+
+                            -for (var i=1; i<8; i++)
+                                +tbdata(i)
+
                     div.study_button
                         div.study_submit
                             input(type='submit' value='確認')

@@ -30,7 +30,7 @@ router.post('/',function (req,res) {
 
                     if(docs.length!=0){
                         console.log('this user is registered already!');
-                        res.redirect('/signup');
+                        res.redirect('signup');
                     }else{
                         collection.insert(user, function(err, result){
 

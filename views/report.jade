@@ -20,95 +20,95 @@ html
                 hr
 
             div
-                form
+                form(method='post')
                     div.report_head
                         label.report_label 質的に
                     div.report_list
-                        input(type='radio' name='quality')
-                        | 1234
+                        input(type='radio' name='quality' value='高すぎる')
+                        | 高すぎる
                         br
-                        input(type='radio' name='quality')
+                        input(type='radio' name='quality' value='やや高い')
                         | やや高い
                         br
-                        input(type='radio' name='quality')
+                        input(type='radio' name='quality' value='適当')
                         | 適当
                         br
-                        input(type='radio' name='quality')
+                        input(type='radio' name='quality' value='やや低い')
                         | やや低い
                         br
-                        input(type='radio' name='quality')
+                        input(type='radio' name='quality' value='低い')
                         | 低い
 
                     div.report_head
                         label.report_label 量的に
                     div.report_list
-                        input(type='radio' name='quantity')
+                        input(type='radio' name='quantity' value='多すぎる')
                         | 多すぎる
                         br
-                        input(type='radio' name='quantity')
+                        input(type='radio' name='quantity' value='やや多い')
                         | やや多い
                         br
-                        input(type='radio' name='quantity')
+                        input(type='radio' name='quantity' value='適当')
                         | 適当
                         br
-                        input(type='radio' name='quantity')
+                        input(type='radio' name='quantity' value='やや少ない')
                         | やや少ない
                         br
-                        input(type='radio' name='quantity')
+                        input(type='radio' name='quantity' value='少ない')
                         | 少ない
 
                     div.report_head
                         label.report_label 興味
                     div.report_list
-                        input(type='radio' name='interest')
+                        input(type='radio' name='interest' value='非常にある')
                         | 非常にある
                         br
-                        input(type='radio' name='interest')
+                        input(type='radio' name='interest' value='かなりある')
                         | かなりある
                         br
-                        input(type='radio' name='interest')
+                        input(type='radio' name='interest' value='普通')
                         | 普通
                         br
-                        input(type='radio' name='interest')
+                        input(type='radio' name='interest' value='あまりない')
                         | あまりない
                         br
-                        input(type='radio' name='interest')
+                        input(type='radio' name='interest' value='ほとんどない')
                         | ほとんどない
 
                     div.report_head
                         label.report_label あなたの能力
                     div.report_list
-                        input(type='radio' name='ability')
+                        input(type='radio' name='ability' value='十分活用できる')
                         | 十分活用できる
                         br
-                        input(type='radio' name='ability')
+                        input(type='radio' name='ability' value='だいたい活用できる')
                         | だいたい活用できる
                         br
-                        input(type='radio' name='ability')
+                        input(type='radio' name='ability' value='まあまあ活用できる')
                         | まあまあ活用できる
                         br
-                        input(type='radio' name='ability')
+                        input(type='radio' name='ability' value='あまり活用できない')
                         | あまり活用できない
                         br
-                        input(type='radio' name='ability')
+                        input(type='radio' name='ability' value='全く活用できない')
                         | 全く活用できない
 
                     div.report_head
                         label.report_label あなたの適性に
                     div.report_list
-                        input(type='radio' name='aptitude')
+                        input(type='radio' name='aptitude' value='非常に適している')
                         | 非常に適している
                         br
-                        input(type='radio' name='aptitude')
+                        input(type='radio' name='aptitude' value='大体適している')
                         | 大体適している
                         br
-                        input(type='radio' name='aptitude')
+                        input(type='radio' name='aptitude' value='普通')
                         | 普通
                         br
-                        input(type='radio' name='aptitude')
+                        input(type='radio' name='aptitude' value='あまり適していない')
                         | あまり適していない
                         br
-                        input(type='radio' name='aptitude')
+                        input(type='radio' name='aptitude' value='適していない')
                         | 適していない
 
                     div.report_title
@@ -119,52 +119,52 @@ html
                         label.report_label 専門知識技能
                     div.report_list
                         div.report_check1
-                            input(type='checkbox' name='Expert')
+                            input(type='checkbox' name='Expert' value='分析力')
                             | 分析力
                         div.report_check2
-                            input(type='checkbox' name='Expert')
+                            input(type='checkbox' name='Expert' value='決断力')
                             | 決断力
                         div.report_check3
-                            input(type='checkbox' name='Expert')
+                            input(type='checkbox' name='Expert' value='理解判断力')
                             | 理解判断力
 
                     div.report_head
                         label.report_label 一般知識技能
                     div.report_list
                         div.report_check1
-                            input(type='checkbox' name='skill')
+                            input(type='checkbox' name='skill' value='創造力')
                             | 創造力
                         div.report_check2
-                            input(type='checkbox' name='skill')
+                            input(type='checkbox' name='skill' value='実行力')
                             | 実行力
                         div.report_check3
-                            input(type='checkbox' name='skill')
+                            input(type='checkbox' name='skill' value='問題意識')
                             | 問題意識
 
                     div.report_head
                         label.report_label 業務処理力
                     div.report_list
                         div.report_check1
-                            input(type='checkbox' name='business')
+                            input(type='checkbox' name='business' value='企画立案力')
                             | 企画立案力
                         div.report_check2
-                            input(type='checkbox' name='business')
+                            input(type='checkbox' name='business' value='折衛調整力')
                             | 折衛調整力
                         div.report_check3
-                            input(type='checkbox' name='business')
+                            input(type='checkbox' name='business' value='健康')
                             | 健康
 
                     div.report_head
                         label.report_label 計数的能力
                     div.report_list
                         div.report_check1
-                            input(type='checkbox' name='rule')
+                            input(type='checkbox' name='rule' value='指導統卒力')
                             | 指導統卒力
                         div.report_check2
-                            input(type='checkbox' name='rule')
+                            input(type='checkbox' name='rule' value='対応力')
                             | 対応力
                         div.report_check3
-                            input(type='checkbox' name='rule')
+                            input(type='checkbox' name='rule' value='人間の幅')
                             | 人間の幅
 
                     div.report_submit

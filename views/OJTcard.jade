@@ -17,7 +17,7 @@ html
         include side_bar.jade
 
         div.box
-            form
+            form(method='post')
                 div.study_table
                     table
                         tr
@@ -27,76 +27,20 @@ html
                         tr
                             th 習得技術内容
                             th(style='width: 10%') 達成率
-                        tr
-                            td: input.study_date(type='date')
-                            td: input.study_text(type='text')
-                            td: input.study_text(type='text')
-                            td: select
-                                option 100%
-                                option 90%
-                                option 80%
-                                option 60%
-                                option 未達成
-                        tr
-                            td: input.study_date(type='date')
-                            td: input.study_text(type='text')
-                            td: input.study_text(type='text')
-                            td: select
-                                option 100%
-                                option 90%
-                                option 80%
-                                option 60%
-                                option 未達成
-                        tr
-                            td: input.study_date(type='date')
-                            td: input.study_text(type='text')
-                            td: input.study_text(type='text')
-                            td: select
-                                option 100%
-                                option 90%
-                                option 80%
-                                option 60%
-                                option 未達成
-                        tr
-                            td: input.study_date(type='date')
-                            td: input.study_text(type='text')
-                            td: input.study_text(type='text')
-                            td: select
-                                option 100%
-                                option 90%
-                                option 80%
-                                option 60%
-                                option 未達成
-                        tr
-                            td: input.study_date(type='date')
-                            td: input.study_text(type='text')
-                            td: input.study_text(type='text')
-                            td: select
-                                option 100%
-                                option 90%
-                                option 80%
-                                option 60%
-                                option 未達成
-                        tr
-                            td: input.study_date(type='date')
-                            td: input.study_text(type='text')
-                            td: input.study_text(type='text')
-                            td: select
-                                option 100%
-                                option 90%
-                                option 80%
-                                option 60%
-                                option 未達成
-                        tr
-                            td: input.study_date(type='date')
-                            td: input.study_text(type='text')
-                            td: input.study_text(type='text')
-                            td: select
-                                option 100%
-                                option 90%
-                                option 80%
-                                option 60%
-                                option 未達成
+                        mixin table(day)
+                            tr
+                                td: input.study_date(type='date' name='ojt_day'+day)
+                                td: input.study_text(type='text' name='content'+day)
+                                td: input.study_text(type='text' name='self_report'+day)
+                                td: select(name='percent'+day)
+                                    option 100%
+                                    option 90%
+                                    option 80%
+                                    option 60%
+                                    option 未達成
+                        -for (var i=1; i<8; i++)
+                            +table(i)
+
                     div.study_block
                         div.study_submit
                             input(type='submit' value='確認')
@@ -109,7 +53,7 @@ html
                     div.study_block
                         label.study_label 先生評価
                     div.study_block
-                        textarea.study_evaluation
+                        textarea.study_evaluation(name='t_evaluation')
                     div.study_block
                         div.study_submit
                             input(type='submit' value='送信')

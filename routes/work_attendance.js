@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
     if(req.session.user){
         res.render('work_attendance');
     }else{
-        res.redirect('/login');
+        res.redirect('login');
     }
 
 });
@@ -19,7 +19,7 @@ router.post('/',function (req, res) {
     if (req.body.logout){
         req.session.destroy(function () {
             console.log('user logout');
-            res.redirect('/login')
+            res.redirect('login')
         })
     }else {
         var mongodb = require('mongodb');
