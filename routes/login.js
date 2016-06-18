@@ -34,7 +34,7 @@ router.post('/',function (req,res) {
                         throw err;
                     }else if(docs.length==0){
                         console.log('Wrong username or password!');
-                        res.redirect('/login')
+                        res.redirect('/login');
                     }else{
                         console.log('Login success');
                         req.session.user = docs[0];

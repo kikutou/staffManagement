@@ -32,7 +32,7 @@ router.post('/',function (req,res) {
                         console.log('this user is registered already!');
                         res.redirect('signup');
                     }else{
-                        collection.insert(user, function(err, result){
+                        col_users.insert(user, function(err, result){
 
                             if(err){
                                 console.log('err in insert');
