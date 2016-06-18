@@ -11,11 +11,12 @@ html
         //Import script & css
         script(type='text/javascript' src='/javascripts/sign_up_vaditation.js')
         link(rel='stylesheet' type='text/css' href='/stylesheets/sign_up_list.css')
+        link(rel='stylesheet' type='text/css' href='/stylesheets/layout.css')
 
     body
-        include top.jade
+        div#top.top
+            div.logo MAMOL
         br
-
         //input page
         div(align='center' style='marginTop: 3%')
             form#user_sign_up(method='post')

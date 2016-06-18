@@ -26,12 +26,12 @@ html
                 div.exam_label 行動基準評定の評点
                 div.exam_number
                     form(action='' method='get') 研修番号:
-                        input#student_number(type='text' name='student_number')
+                        input#student_number(type='text' name='staff_number')
                         input(type='submit' value='決定')
 
             div.exam_table
                 hr
-                form
+                form(method='post')
                     table
                         tr
                             th(colspan='2') 項目
@@ -39,483 +39,163 @@ html
                             th 望ましい行動例
                             th 本人$x次
                             th 先生評価
+
+                        mixin slt(note)
+                            td
+                                select(name='student_'+note)
+                                    option
+                                    option(value='true') ◯
+                                    option(value='false') ❌
+                            td
+                                select(name='teacher_'+note)
+                                    option
+                                    option(value='true') ◯
+                                    option(value='false') ❌
+
                         tr
                             td 1
                             td チーム・部門・会社への貢献
                             td 会社という共同体に対して積極的な関わりが出来ているか
                             td イベント・親睦会などの会社行事へ積極的に企画、参加をしている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                   option
-                                   option(value='true') ◯
-                                   option(value='false') ❌
+                            +slt('1')
                         tr
                             td(rowspan='3') 2
                             td(rowspan='3') 報連相の徹底
                             td(rowspan='3') 報連相を始めとする情報共有が適切に図られているか
                             td イ先生・先輩などの上位者に対し、適時・正確にホウレンソウ（報告・連絡・相談）をしている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('2_1')
                         tr
                             td 提出物は必要な事項を満たし、決められた期限までに提出している
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('2_2')
                         tr
                             td 必要な会議には必ず参加している
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('2_3')
                         tr
                             td(rowspan='4') 3
                             td(rowspan='4') 責任意識
                             td(rowspan='4') 社会人としての職務・責務・義務を全うしているか
                             td 先生・先輩などからの業務指示・命令の内容を理解して従っている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('3_1')
                         tr
                             td 仕事に対する自身の目的意識や思いを持って、取り組んでいる
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('3_2')
                         tr
                             td 次の課題を見据えながら、手がけている仕事に全力で取り組んでいる
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('3_3')
                         tr
                             td 社会人として社内外に対して不用意な発言をしていない
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('3_4')
                         tr
                             td(rowspan='5') 4
                             td(rowspan='5') コミュニケーション能力
                             td(rowspan='5') 社会人として円滑なコミュニケーションが図れているか
                             td 挨拶を欠かさずに行っている（出社時、退社時、外出時、帰社時）
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('4_1')
                         tr
                             td 自分の意見や主張を筋道立てて相手に説明している
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('4_2')
                         tr
                             td 人的ネットワークを積極的に広げ、周囲に溶け込んでいる
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('4_3')
                         tr
                             td 相手の心情や状況に配慮し、適切な態度や言葉遣い、姿勢で依頼や折衝をしている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('4_4')
                         tr
                             td 苦手な上司や同僚とも、仕事上支障がないよう、必要な関係を保っている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('4_5')
                         tr
                             td(rowspan='5') 5
                             td(rowspan='5') 協調性
                             td(rowspan='5') 周囲と協力して仕事をすすめられているか
                             td 余裕がある場合には、周囲の忙しそうな人の仕事を手伝っている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('5_1')
                         tr
                             td チームプレーを行う際には、仲間と仕事や役割を分担して協同で取り組んでいる
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('5_2')
                         tr
                             td 周囲の同僚の立場や状況を考えながら、チームプレーを行っている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('5_3')
                         tr
                             td 苦手な同僚、考え方の異なる同僚であっても、協力して仕事を進めている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('5_4')
                         tr
                             td 新人に対して業務指導や仕事のノウハウ提供をしている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('5_5')
                         tr
                             td(rowspan='6') 6
                             td(rowspan='6') 社会人としてのモラル
                             td(rowspan='6') 社会人として必要なレベルに達しているか
                             td 職場において、職務にふさわしい身だしなみを保っている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('6_1')
                         tr
                             td 書類・机上の整理整頓を心掛け、共有スペース（トイレ、会議室等）を適切に利用している
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('6_2')
                         tr
                             td 雑務（電話応対、ゴミ捨て、お茶入れ、ホワイトボード整理など）を積極的に行っている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('6_3')
                         tr
                             td 状況に応じて適切な敬語の使い分けをしている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('6_4')
                         tr
                             td 一歩会社から出たら自分が社会人という意識で行動している（守秘義務）
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('6_5')
                         tr
                             td 法令や会社のルールが守れているか
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('6_6')
                         tr
                             td 7
                             td 勤怠
                             td 会社の基本的なルールが守れているか
                             td 勤怠報告（休暇・遅刻・早退）を上長（先生、先輩を含む）へ適切に報告が出来ている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('7')
                         tr
                             td(rowspan='2') 8
                             td(rowspan='2') 自己管理
                             td(rowspan='2') 万全な体調で仕事に臨むための工夫が出来ているか
                             td 日々の体調管理に気を配り、自分の感情をコントロールできている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('8_1')
                         tr
                             td 計画的に心身を休めることが出来ている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('8_2')
                         tr
                             td(rowspan='5') 9
                             td(rowspan='5') 向上心
                             td(rowspan='5') 前向きな挑戦が出来ているか
                             td 仕事を効率的に進められるように、作業の工夫や改善に取り組んでいる
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('9_1')
                         tr
                             td 必要性に気づいたら、人に指摘される前に行動に移している
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('9_2')
                         tr
                             td 新しい仕事に挑戦するため、資格取得や自己啓発などに取り組んでいる
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('9_3')
                         tr
                             td 仕事について工夫や改善を行った内容を再度点検して、さらによいものにしている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('9_4')
                         tr
                             td 他人の話をよく聞いて、自分の至らないところ、劣っているところを改善している
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('9_5')
                         tr
                             td(rowspan='3') 10
                             td(rowspan='3') 問題発見・問題解決
                             td(rowspan='3') 客観的な視点で物事を分析し、問題発見・問題解決が出来ているか
                             td 上手くいかない仕事に対しても、原因をつきとめ、再チャレンジしている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('10_1')
                         tr
                             td 不意の問題やトラブルが発生したときに、解決するための対応をとっている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('10_2')
                         tr
                             td 現実的な問題解決が出来ている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('10_3')
                         tr
                             td(rowspan='2') 11
                             td(rowspan='2') 段取り・計画・企画
                             td(rowspan='2') 自分の業務の段取り・計画・企画が出来ているか
                             td 作業や依頼されたことに対して、完成までの見通しを立てて、とりかかっている
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('11_1')
                         tr
                             td 新しいことに取り組むときには、手順や必要なことを洗い出している
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
-                            td
-                                select
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                            +slt('11_2')
                     p(style='text-align: right')
                         label 合計点
                         input(type='text' name='exam_point')

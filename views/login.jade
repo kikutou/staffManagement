@@ -14,10 +14,12 @@ html
 
         //Import script & css
         link(rel='stylesheet' type='text/css' href='/stylesheets/login.css')
+        link(rel='stylesheet' type='text/css' href='/stylesheets/layout.css')
         script(type='text/javascript' src='/javascripts/validation.js')
 
     body
-        include top.jade
+        div#top.top
+            div.logo MAMOL
         div
             div.login_title
                 h1 学員行動基準評定ユーザー登録システム
