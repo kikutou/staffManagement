@@ -6,11 +6,11 @@ html
         title 出退勤管理
         meta(charset='UTF-8')
         //Import jQuery
-        include jQuery_import.jade
+        include ../jQuery_import.jade
         //Import script & css
         link(rel='stylesheet' type='text/css' href='/stylesheets/attendance.css')
     body
-        include top.jade
+        include ../top.jade
         div.box
             div
                 //出勤テキスト
@@ -42,13 +42,13 @@ html
                         tr
                             th(id= 'date_'+note rowspan='2')
                             th 入室時間
-                            td(id= 'e_ti_'+note placeholder='欠勤')
+                            td(id= 'e_ti_'+note)
                             th 遅刻原因
                             td(id= 'l_re_'+note)
                         tr
                             th 退室時間
-                            td(id= 'l_ti_'+note placeholder='欠勤')
-                            th 遅刻原因
+                            td(id= 'l_ti_'+note)
+                            th 早退原因
                             td(id= 'eo_re_'+note)
                     -for (i=1; i<8; i++)
                         +time_list(i)

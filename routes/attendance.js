@@ -6,5 +6,5 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-    res.render('/attendance/attendance')
+    res.render('attendance/attendance');
 });
