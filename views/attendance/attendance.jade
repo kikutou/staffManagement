@@ -1,0 +1,54 @@
+//
+   Created by mamol on 16/06/18.
+doctype html
+html
+    head
+        title 出退勤管理
+        meta(charset='UTF-8')
+        //Import jQuery
+        include jQuery_import.jade
+        //Import script & css
+        link(rel='stylesheet' type='text/css' href='/stylesheets/attendance.css')
+    body
+        include top.jade
+        div.box
+            div
+                //出勤テキスト
+                div
+                    div
+                        form(method='post')
+                            button(type='submit' name='entrance_time')#entrance_button 入室確認
+                    div
+                        form(method='post')
+                            div
+                                input(type='text' placeholder='遅刻原因' name='late_reason')
+                            div
+                                input(type='submit' value='送信')
+                //退勤テキスト
+                div
+                    div
+                        form(method='post')
+                            button(type='submit' name='leave_time')#leave_button 退室確認
+                    div
+                        form(method='post')
+                            div
+                                input(type='text' placeholder='早退原因' name='E_O_reason')
+                            div
+                                input(type='submit' value='送信')
+            //一週間の出勤状態
+            div
+                table
+                    mixin time_list(note)
+                        tr
+                            th(id= 'date_'+note rowspan='2')
+                            th 入室時間
+                            td(id= 'e_ti_'+note placeholder='欠勤')
+                            th 遅刻原因
+                            td(id= 'l_re_'+note)
+                        tr
+                            th 退室時間
+                            td(id= 'l_ti_'+note placeholder='欠勤')
+                            th 遅刻原因
+                            td(id= 'eo_re_'+note)
+                    -for (i=1; i<8; i++)
+                        +time_list(i)
