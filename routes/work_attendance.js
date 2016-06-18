@@ -8,7 +8,6 @@ var router = express.Router();
 router.get('/', function(req, res) {
 
     if(req.session.user){
-
         res.render('work_attendance');
     }else{
         res.redirect('login');
