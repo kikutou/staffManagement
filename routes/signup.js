@@ -38,7 +38,7 @@ router.post('/',function (req,res) {
                                 console.log('err in insert');
                             }else{
                                 console.log('Sign Up Success');
-                                res.render('login')
+                                res.redirect('login')
                             }
 
                         });

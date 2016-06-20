@@ -1,0 +1,43 @@
+//
+   Created by mamol on 16/06/20.
+
+script.
+    //入室ボタンを押すと、出席の再確認と遅刻原因を入力のが不可能になる
+    if (!{result_enTime} == true) {
+        $(function () {
+            $('#entrance_button').attr('disabled', 'true');
+            $('#late_text').attr('disabled', 'true');
+            $('#late_button').attr('disabled', 'true');
+    //            alert('おはようございます')
+        })
+    }
+
+script.
+    //退室ボタンを押すと、退室の再確認と早退原因を入力のが不可能になる
+    if (!{result_lvTime} == true) {
+        $(function () {
+            $('#leave_button').attr('disabled', 'true');
+            $('#E_O_text').attr('disabled', 'true');
+            $('#E_O_button').attr('disabled', 'true');
+    //            alert('お疲れ様です')
+        })
+    }
+
+script.
+    //遅刻原因が二度と入力は不可能
+    if (!{result_late} == true) {
+        $(function () {
+            $('#late_text').attr('disabled', 'true');
+            $('#late_button').attr('disabled', 'true');
+        })
+    }
+
+script.
+    //早退原因が二度と入力は不可能
+    if (!{result_E_O} == true) {
+        $(function () {
+            $('#E_O_text').attr('disabled', 'true');
+            $('#E_O_button').attr('disabled', 'true');
+        })
+    }
+

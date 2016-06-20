@@ -10,7 +10,9 @@ html
         //Import script & css
         link(rel='stylesheet' type='text/css' href='/stylesheets/attendance.css')
         script(type='text/javascript' src='/javascripts/attendanceTime.js')
-    body
+        //Import responses
+        include ../responses/res_attendance.jade
+body
         include ../top.jade
         div.box
             div
@@ -22,9 +24,9 @@ html
                     div
                         form(method='post')
                             div
-                                input(type='text' placeholder='遅刻原因' name='late_reason')
+                                input(type='text' placeholder='遅刻原因' name='late_reason')#late_text
                             div
-                                input(type='submit' value='送信')
+                                input(type='submit' value='送信')#late_button
                 //退勤テキスト
                 div
                     div
@@ -33,9 +35,9 @@ html
                     div
                         form(method='post')
                             div
-                                input(type='text' placeholder='早退原因' name='E_O_reason')
+                                input(type='text' placeholder='早退原因' name='E_O_reason')#E_O_text
                             div
-                                input(type='submit' value='送信')
+                                input(type='submit' value='送信')#E_O_button
             //一週間の出勤状態
             div
                 table
@@ -53,3 +55,4 @@ html
                             td(id= 'eo_re_'+note)
                     -for (i=1; i<8; i++)
                         +time_list(i)
+

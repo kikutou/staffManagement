@@ -9,6 +9,21 @@
             var hour = date.getHours();
             var minute = date.getMinutes();
             var second = date.getSeconds();
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (day < 10) {
+                day = '0' + day;
+            }
+            if (hour < 10) {
+                hour = '0' + hour;
+            }
+            if (minute < 10) {
+                minute = '0' + minute;
+            }
+            if (second < 10) {
+                second = '0' + second;
+            }
             var dateStr = year+"/"+month+"/"+day+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+hour+":"+minute+":"+second;
             var dateTime = hour+":"+minute+":"+second;
 
