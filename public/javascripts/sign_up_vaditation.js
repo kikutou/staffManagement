@@ -32,7 +32,8 @@ $(function() {
         {
             dateFormat: dateFormat,
             changeYear: true,
-            changeMonth: true
+            changeMonth: true,
+            yearRange: '1950:',
         }
     );
 });
