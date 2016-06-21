@@ -36,10 +36,10 @@ router.get('/', function(req, res) {
                 var msg = [];
                 var col_attendance = db.collection('attendance');
 
-                if (w > 1){
+/*                if (w > 1){
                     var x = w - i;
                     for (i=1; i<w; i++){}
-                }
+                }*/
                 // }
                 // }
                 // }
