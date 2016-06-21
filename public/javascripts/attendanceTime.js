@@ -36,6 +36,7 @@
                     $(this).html("現在の時間："+dateStr);
                 }
             );
+            
 
             $("#leave_button").mouseenter(
                 function(){

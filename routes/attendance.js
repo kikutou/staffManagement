@@ -40,18 +40,21 @@ router.get('/', function(req, res) {
                             res.render('attendance/attendance');
                         }else {
                             var msg = [];
-                            console.log(msg);
                             if (docs[0].entrance_time){
                                 msg['result_enTime'] = true;
+                                msg['entrance'] = docs[0].entrance_time
                             }
                             if (docs[0].late_reason){
                                 msg['result_late'] = true;
+                                msg['rson_e'] = docs[0].late_reason
                             }
                             if (docs[0].leave_time){
                                 msg['result_lvTime'] = true;
+                                msg['leave'] = docs[0].leave_time
                             }
                             if (docs[0].E_O_reason){
                                 msg['result_E_O'] = true;
+                                msg['rson_l'] = docs[0].E_O_reason
                             }
                             console.log(msg);
                             res.render('attendance/attendance', msg);
@@ -100,7 +103,5 @@ router.post('/', function (req, res) {
         })
     }
 });
-
-
 
 module.exports = router;

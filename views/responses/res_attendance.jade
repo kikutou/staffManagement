@@ -8,7 +8,7 @@ script.
             $('#entrance_button').attr('disabled', 'true');
             $('#late_text').attr('disabled', 'true');
             $('#late_button').attr('disabled', 'true');
-    //            alert('おはようございます')
+            $('#entrance_button').html('入室時間 '+"!{entrance}");
         })
     }
 
@@ -19,7 +19,7 @@ script.
             $('#leave_button').attr('disabled', 'true');
             $('#E_O_text').attr('disabled', 'true');
             $('#E_O_button').attr('disabled', 'true');
-    //            alert('お疲れ様です')
+            $('#leave_button').html('退室時間 ' + "!{leave}");
         })
     }
 
@@ -29,6 +29,7 @@ script.
         $(function () {
             $('#late_text').attr('disabled', 'true');
             $('#late_button').attr('disabled', 'true');
+            $('#late_text').attr('placeholder', "!{rson_e}");
         })
     }
 
@@ -38,6 +39,7 @@ script.
         $(function () {
             $('#E_O_text').attr('disabled', 'true');
             $('#E_O_button').attr('disabled', 'true');
+            $('#E_O_text').attr('placeholder', "!{rson_l}");
         })
     }
 
