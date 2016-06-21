@@ -19,6 +19,11 @@ if (d < 10) {
     d = '0' + d;
 }
 var datestr = y + '-' + m + '-' + d;
+//Get Weekday
+var w = now.getDay();
+//Get Timestamp
+var ts = now.getTime();
+var ds = Math.floor(ts / 1000 / 60 / 60 / 24);
 
 
 /* GET users listing. */
@@ -28,8 +33,51 @@ router.get('/', function(req, res) {
             if (err){
                 throw err;
             }else {
+                var msg = [];
                 var col_attendance = db.collection('attendance');
 
+                if (w > 1){
+                    var x = w - i;
+                    for (i=1; i<w; i++){}
+                }
+                // }
+                // }
+                // }
+                //     for (i=1; i<w; i++){
+                //
+                //         col_attendance.find({user_id: req.session.user._id, timestamp: ds-i}).toArray(function (err, doc) {
+                //             if (err){
+                //                 throw err;
+                //             }else {
+                //                 msg['d'+ x] = doc[0].entrance_time;
+                //
+                //             }
+                //
+                // for (i=1; i<w; i++){
+                //     var x = w - i;
+                //     col_attendance.find({user_id: req.session.user._id, timestamp: ds-i}).toArray(function (err, doc) {
+                //         if (err){
+                //             throw err;
+                //         }else {
+                //             if (w > 1){
+                //                 msg['d'+ x] = doc[0].entrance_time;
+                //             }else if(w = 1) {
+                //                 msg['d'+ ]
+                //             }
+                //         }
+                //     })
+                // }
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 col_attendance.find({user_id: req.session.user._id, date: datestr}).toArray(function (err, docs) {
                     console.log(docs);
 
@@ -39,7 +87,6 @@ router.get('/', function(req, res) {
                         if (docs.length==0){
                             res.render('attendance/attendance');
                         }else {
-                            var msg = [];
                             if (docs[0].entrance_time){
                                 msg['result_enTime'] = true;
                                 msg['entrance'] = docs[0].entrance_time
@@ -82,6 +129,7 @@ router.post('/', function (req, res) {
                 var attendance = req.body;
                 attendance['user_id'] = req.session.user._id;
                 attendance['date'] = datestr;
+                attendance['timestamp'] = ds;
 
                 var col_attendance = db.collection('attendance');
 
