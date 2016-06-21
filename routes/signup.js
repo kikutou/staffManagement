@@ -30,7 +30,7 @@ router.post('/',function (req,res) {
 
                     if(docs.length!=0){
                         console.log('this user is registered already!');
-                        res.redirect('signup');
+                        res.redirect('/signup');
                     }else{
                         col_users.insert(user, function(err, result){
 
@@ -38,9 +38,8 @@ router.post('/',function (req,res) {
                                 console.log('err in insert');
                             }else{
                                 console.log('Sign Up Success');
-                                res.redirect('login')
+                                res.redirect('/login')
                             }
-
                         });
                     }
                 }

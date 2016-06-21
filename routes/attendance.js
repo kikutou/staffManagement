@@ -18,7 +18,6 @@ if (m < 10) {
 if (d < 10) {
     d = '0' + d;
 }
-
 var datestr = y + '-' + m + '-' + d;
 
 
@@ -30,46 +29,49 @@ router.get('/', function(req, res) {
                 throw err;
             }else {
                 var col_attendance = db.collection('attendance');
-                var col_user = db.collection('users');
 
-                var user_msg = col_attendance.find({user_id: req.session.user._id, date: datestr});
-                user_msg.toArray(function (err, docs) {
-                    // console.log(docs);
+                col_attendance.find({user_id: req.session.user._id, date: datestr}).toArray(function (err, docs) {
+                    console.log(docs);
+
                     if (err){
                         throw err;
                     }else {
-                        if (user_msg.entrance_time){
-                            res.render('attendance/attendance', {result_enTime: true});
-                        }
-                        if (user_msg.late_reason){
-                            res.render('attendance/attendance', {result_late: true});
-                        }
-                        if (user_msg.leave_time){
-                            res.render('attendance/attendance', {result_lvTime: true});
-                        }
-                        if (user_msg.E_O_reason){
-                            res.render('attendance/attendance', {result_E_O: true});
+                        if (docs.length==0){
+                            res.render('attendance/attendance');
+                        }else {
+                            var msg = [];
+                            console.log(msg);
+                            if (docs[0].entrance_time){
+                                msg['result_enTime'] = true;
+                            }
+                            if (docs[0].late_reason){
+                                msg['result_late'] = true;
+                            }
+                            if (docs[0].leave_time){
+                                msg['result_lvTime'] = true;
+                            }
+                            if (docs[0].E_O_reason){
+                                msg['result_E_O'] = true;
+                            }
+                            console.log(msg);
+                            res.render('attendance/attendance', msg);
                         }
                     }
                 })
             }
-        });
-
+        })
     }else {
         res.redirect('login')
     }
 });
 
 router.post('/', function (req, res) {
-
-
     if (req.body.logout){
         req.session.destroy(function () {
             console.log('user logout');
             res.redirect('/login')
         })
     }else {
-
         db.open(function (err, db) {
             if (err){
                 throw err;
@@ -78,28 +80,22 @@ router.post('/', function (req, res) {
                 attendance['user_id'] = req.session.user._id;
                 attendance['date'] = datestr;
 
-                col_attendance.insert(attendance, function (err, result) {
-                    if (err){
-                        throw err;
-                    }else{
-                        if (attendance.entrance_time){
-                            //入室確認
-                            res.render('attendance/attendance', {result_enTime: true});
-                        }else if (attendance.late_reason){
-                            //遅刻原因
-                            res.render('attendance/attendance', {result_late: true});
-                        }else if (attendance.leave_time){
-                            //退室確認
-                            res.render('attendance/attendance', {result_lvTime: true});
-                        }else if (attendance.E_O_reason){
-                            //早退原因
-                            res.render('attendance/attendance', {result_E_O: true});
+                var col_attendance = db.collection('attendance');
+
+                col_attendance.update(
+                    {user_id: attendance['user_id'], date: attendance['date']},
+                    {$set: attendance},
+                    {
+                        upsert: true,
+                        multi: true
+                    }, function (err, result) {
+                        if (err){
+                            throw err;
                         }else {
-                            res.redirect('/attendance');
+                            res.redirect('/attendance')
                         }
                     }
-                });
-
+                )
             }
         })
     }
