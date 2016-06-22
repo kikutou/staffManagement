@@ -33,7 +33,7 @@ $(function() {
             dateFormat: dateFormat,
             changeYear: true,
             changeMonth: true,
-            yearRange: '1950:',
+            yearRange: '1950:'
         }
     );
 });
@@ -44,7 +44,8 @@ $(function() {
         {
             dateFormat: dateFormat,
             changeYear: true,
-            changeMonth: true
+            changeMonth: true,
+            yearRange: '1950:'
         }
     );
 });
@@ -55,4 +56,4 @@ $(function () {
             $("#signup_massage").show();
             $("#signup_confirm").hide()
         })
-})
+});
