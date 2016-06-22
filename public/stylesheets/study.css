@@ -17,12 +17,13 @@ td{
 }
 
 .study_date{
-    width: 90%;
+    width: 15%;
     text-align: center;
 }
 
 .study_text{
     width: 94%;
+    text-align: center;
 }
 
 .study_block{

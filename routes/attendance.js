@@ -125,6 +125,7 @@ router.post('/', function (req, res) {
     // //Get Timestamp
     var ts = now.getTime();
     var ds = Math.floor(ts / 1000 / 60 / 60 / 24);
+
     if (req.body.logout){
         req.session.destroy(function () {
             console.log('user logout');

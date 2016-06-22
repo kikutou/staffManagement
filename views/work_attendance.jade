@@ -1,72 +1,80 @@
 //
-   Created by mamol on 16/06/14.
+   Created by mamol on 16/06/18.
 doctype html
 html
     head
+        title 出退勤管理
         meta(charset='UTF-8')
-        title 出席確認
         //Import jQuery
         include jQuery_import.jade
         //Import script & css
+        link(rel='stylesheet' type='text/css' href='/stylesheets/attendance.css')
         script(type='text/javascript' src='/javascripts/attendanceTime.js')
-        link(rel='stylesheet' type='text/css' href='/stylesheets/work_attendance.css')
-
+        //Import responses
+        include responses/res_attendance.jade
     body
         include top.jade
-        include side_bar.jade
+        div.att_box
+            div.att_table
+                div.att_att
+                    //出勤テキスト
+                    div
+                        div
+                            form(method='post')
+                                button(type='submit' name='entrance_time')#entrance_button 入室確認
+                        div.att_resn
+                            form(method='post')
+                                div
+                                    input(type='text' placeholder='遅刻原因' name='late_reason')#late_text
+                                div
+                                    input(type='submit' value='送信')#late_button
+                    //退勤テキスト
+                    div.leave
+                        div
+                            form(method='post')
+                                button(type='submit' name='leave_time')#leave_button 退室確認
+                        div.att_resn
+                            form(method='post')
+                                div.att_rtext
+                                    input(type='text' placeholder='早退原因' name='E_O_reason')#E_O_text
+                                div.att_rbutton
+                                    input(type='submit' value='送信')#E_O_button
 
-        div.box
-            //出席確認
-            div.attendance_check(style='margin-top: 2%')
-                div.attendance_button
-                    form(method='post')
-                        button(type='submit' name='entrance_time')#entrance_button 入室確認
+                div.att_set
+                    div
+                        div
+                            input(type='text')
+                        div
+                            div
+                                button 捜索
+                            div
+                                button 設定
+                    div
+                        div
+                            p 出勤時間
+                        div
+                            p
+                        div
+                            p 退勤時間
+                        div
+                            p
 
-            div.attendance_reason
-                form(method='post')
-                    div.attendance_label
-                        label 遅刻の原因
-                    div(style='width: 100%')
-                        textarea(name='late_reason').attendance_text
-                    div(style='width: 100%')
-                        input(type='button' value='修正')
-                        input(type='submit' value='送信')
+            //一週間の出勤状態
+            div.att_list
+                hr
+                table.att_table
+                    mixin time_list(note)
+                        tr
+                            th(id= 'date_'+note rowspan='2').att_date
+                            th.att_label 入室時間
+                            td(id= 'e_ti_'+note).att_time
+                            th.att_label 遅刻原因
+                            td(id= 'l_re_'+note)
+                        tr
+                            th.att_label 退室時間
+                            td(id= 'l_ti_'+note).att_time
+                            th.att_label 早退原因
+                            td(id= 'eo_re_'+note)
+                    -for (var i=1; i<8; i++)
+                        +time_list(i)
 
-            div.attendance_remark
-                form(method='post')
-                    div.attendance_label
-                        label リマーク
-                    div(style='width: 100%')
-                        textarea(name='late_remark').attendance_text
-                    div(style='width: 100%')
-                        input(type='button' value='修正')
-                        input(type='submit' value='送信')
-
-            br
-            hr
-
-            //退室確認
-            div.attendance_check(style='margin-top: 1%')
-                div.attendance_button
-                    form(method='post')
-                        button(type='submit' name='leave_time')#leave_button 退室確認
-
-            div.attendance_reason
-                form(method='post')
-                    div.attendance_label
-                        label 早退の原因
-                    div(style='width: 100%')
-                        textarea(name='leave_reason').attendance_text
-                    div(style='width: 100%')
-                        input(type='button' value='修正')
-                        input(type='submit' value='送信')
-
-            div.attendance_remark
-                form(method='post')
-                    div.attendance_label
-                        label リマーク
-                    div(style='width: 100%')
-                        textarea(name='leave_remark').attendance_text
-                    div(style='width: 100%')
-                        input(type='button' value='修正')
-                        input(type='submit' value='送信')

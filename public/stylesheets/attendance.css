@@ -23,6 +23,26 @@ td{
     margin-left: 1%;
 }
 
+.att_att{
+    width: 30%;
+    float: left;
+    margin-top: 1%;
+}
+
+.leave{
+    margin-top: 5%;
+}
+
+.att_resn{
+    margin-top: 2%;
+}
+
+.att_set{
+    float: right;
+    margin-top: 1%;
+    margin-right: 10%;
+}
+
 .att_date{
     width: 10%;
 }
