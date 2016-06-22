@@ -26,8 +26,8 @@ router.get('/', function(req, res) {
     var w = now.getDay();
     //Get Timestamp
     var ts = now.getTime();
-
     var ds = Math.floor(ts / 1000 / 60 / 60 / 24);
+
     if (req.session.user){
         db.open(function (err, db) {
             if (err){
@@ -41,21 +41,28 @@ router.get('/', function(req, res) {
                 }else if (w == 0){
                     w = 7;
                 }
-                for (var i=1; i<w; i++){
-
-                    col_attendance.find({user_id: req.session.user._id, timestamp: ds-i}).toArray(function (err, doc) {
-                        console.log(doc);
-                        if (err){
-                            throw err;
-                        }else {
-                            var x = w - i;
-                            if (doc.length==0){
-                                msg['d'+ x] = null;
+                for (var i=0; i<w; i++){
+                    //建立闭包，保证循环进行
+                    (function (i) {
+                        col_attendance.find({user_id: req.session.user._id, timestamp: ds-i}).toArray(function (err, doc) {
+                            if (err){
+                                throw err;
                             }else {
-                                msg['d'+ x] = doc[0].entrance_time;
+                                var x = w - i;
+                                if (doc.length!=0){
+                                    //     msg['et'+ x] = null;
+                                    //     msg['lr'+ x] = null;
+                                    //     msg['lt'+ x] = null;
+                                    //     msg['eor'+ x] = null;
+                                    // }else {
+                                    msg['et'+ x] = doc[0].entrance_time;
+                                    msg['lr'+ x] = doc[0].late_reason;
+                                    msg['lt'+ x] = doc[0].leave_time;
+                                    msg['eor'+ x] = doc[0].E_O_reason;
+                                }
                             }
-                        }
-                    })
+                        })
+                    })(i)
                 }
 
 
@@ -66,7 +73,7 @@ router.get('/', function(req, res) {
                         throw err;
                     }else {
                         if (docs.length==0){
-                            res.render('attendance/attendance');
+                            res.render('attendance/attendance', msg);
                         }else {
                             if (docs[0].entrance_time){
                                 msg['result_enTime'] = true;
@@ -116,8 +123,8 @@ router.post('/', function (req, res) {
     // //Get Weekday
     // var w = now.getDay();
     // //Get Timestamp
-    // var ts = now.getTime();
-    // var ds = Math.floor(ts / 1000 / 60 / 60 / 24);
+    var ts = now.getTime();
+    var ds = Math.floor(ts / 1000 / 60 / 60 / 24);
     if (req.body.logout){
         req.session.destroy(function () {
             console.log('user logout');

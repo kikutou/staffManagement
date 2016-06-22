@@ -14,8 +14,8 @@ html
         include ../responses/res_attendance.jade
 body
         include ../top.jade
-        div.box
-            div
+        div.att_box
+            div.att_table
                 //出勤テキスト
                 div
                     div
@@ -39,20 +39,20 @@ body
                             div
                                 input(type='submit' value='送信')#E_O_button
             //一週間の出勤状態
-            div
+            div.att_list
                 hr
-                table
+                table.att_table
                     mixin time_list(note)
                         tr
-                            th(id= 'date_'+note rowspan='2')
-                            th 入室時間
-                            td(id= 'e_ti_'+note)
-                            th 遅刻原因
+                            th(id= 'date_'+note rowspan='2').att_date
+                            th.att_label 入室時間
+                            td(id= 'e_ti_'+note).att_time
+                            th.att_label 遅刻原因
                             td(id= 'l_re_'+note)
                         tr
-                            th 退室時間
-                            td(id= 'l_ti_'+note)
-                            th 早退原因
+                            th.att_label 退室時間
+                            td(id= 'l_ti_'+note).att_time
+                            th.att_label 早退原因
                             td(id= 'eo_re_'+note)
                     -for (i=1; i<8; i++)
                         +time_list(i)

@@ -9,6 +9,8 @@
             var hour = date.getHours();
             var minute = date.getMinutes();
             var second = date.getSeconds();
+
+
             if (month < 10) {
                 month = '0' + month;
             }
@@ -53,6 +55,22 @@
                 function () {
                     $(this).html("退室確認");
                 });
+
+            for (var i=1; i<8; i++){
+                var week = date.getDay();
+                if (week == 0){
+                    week = 7;
+                }
+                if (week == 1){
+                    week = 8;
+                }
+                var timestamp = date.getTime();
+                var timestamp_add = 1000*60*60*24;
+                var nowdate = new Date(timestamp-((week-i)*timestamp_add));
+                var nowday = nowdate.toLocaleDateString().replace('/', '-').replace('/', '-');
+
+                $("#date_"+ i).html(nowday);
+            }
         }
         window.setInterval(showTime,100);
     });

@@ -46,5 +46,50 @@ script.
 script.
     //一週間の出勤状態
     $(function () {
-        $('#e_ti_1').html("!{d0}")
+        for (var nt=1; nt<8; nt++){
+            switch (nt){
+                case 1:
+                    $("#e_ti_" + nt).html("!{et1}");
+                    $("#l_re_" + nt).html("!{lr1}");
+                    $("#l_ti_" + nt).html("!{lt1}");
+                    $("#eo_re_" + nt).html("!{eor1}");
+                    break;
+                case 2:
+                    $("#e_ti_" + nt).html("!{et2}");
+                    $("#l_re_" + nt).html("!{lr2}");
+                    $("#l_ti_" + nt).html("!{lt2}");
+                    $("#eo_re_" + nt).html("!{eor2}");
+                    break;
+                case 3:
+                    $("#e_ti_" + nt).html("!{et3}");
+                    $("#l_re_" + nt).html("!{lr3}");
+                    $("#l_ti_" + nt).html("!{lt3}");
+                    $("#eo_re_" + nt).html("!{eor3}");
+                    break;
+                case 4:
+                    $("#e_ti_" + nt).html("!{et4}");
+                    $("#l_re_" + nt).html("!{lr4}");
+                    $("#l_ti_" + nt).html("!{lt4}");
+                    $("#eo_re_" + nt).html("!{eor4}");
+                    break;
+                case 5:
+                    $("#e_ti_" + nt).html("!{et5}");
+                    $("#l_re_" + nt).html("!{lr5}");
+                    $("#l_ti_" + nt).html("!{lt5}");
+                    $("#eo_re_" + nt).html("!{eor5}");
+                    break;
+                case 6:
+                    $("#e_ti_" + nt).html("!{et6}");
+                    $("#l_re_" + nt).html("!{lr6}");
+                    $("#l_ti_" + nt).html("!{lt6}");
+                    $("#eo_re_" + nt).html("!{eor6}");
+                    break;
+                case 7:
+                    $("#e_ti_" + nt).html("!{et7}");
+                    $("#l_re_" + nt).html("!{lr7}");
+                    $("#l_ti_" + nt).html("!{lt7}");
+                    $("#eo_re_" + nt).html("!{eor7}");
+                    break;
+            }
+        }
     })
