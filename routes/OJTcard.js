@@ -13,17 +13,10 @@ router.get('/', function(req, res) {
 
     //現在時刻
     var now = new Date();
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1;
-    var day = now.getDate();
     var week = now.getDay();
-    if (month < 10) {
-        month = '0' + month;
-    }
-    if (day < 10) {
-        day = '0' + day;
-    }
-    var datestr = year + '-' + month + '-' + day;
+    var datestr = now.toISOString().substring(0, 10);
+    console.log(datestr);
+    console.log('hello');
 
     if (req.session.user){
         var col_ojt = db.collection('ojtcard');
@@ -31,44 +24,58 @@ router.get('/', function(req, res) {
             if (err){
                 throw err;
             }else{
-                // switch (week)
-                // {
-                //     case 1:
-                //         var today = 'Mon';
-                //         break;
-                //     case 2:
-                //         var today = 'Tus';
-                //         break;
-                //     case 3:
-                //         var today = 'Wed';
-                //         break;
-                //     case 4:
-                //         var today = 'Thu';
-                //         break;
-                //     case 5:
-                //         var today = 'Fri';
-                //         break;
-                //     case 6:
-                //         var today = 'Sat';
-                //         break;
-                // }
-                // console.log(today);
-                col_ojt.find({'user_id': req.session.user._id, "today.date": datestr}).toArray(function (err, doc) {
+                switch (week)
+                {
+                    case 1:
+                        var today = 'Mon';
+                        break;
+                    case 2:
+                        var today = 'Tus';
+                        break;
+                    case 3:
+                        var today = 'Wed';
+                        break;
+                    case 4:
+                        var today = 'Thu';
+                        break;
+                    case 5:
+                        var today = 'Fri';
+                        break;
+                    case 6:
+                        var today = 'Sat';
+                        break;
+                }
+                console.log(today);
+                col_ojt.find({'user_id': req.session.user._id, "today.&.date": datestr}).toArray(function (err, doc) {
                     if (err){
                         throw err;
                     }else {
                         console.log(doc);
+                        var nowday = [];
                         if (doc.length==0){
+                            for (var i=1; i<8; i++) {
+                                if (week == 0){
+                                    week = 7;
+                                }
+                                var timestamp = now.getTime();
+                                var timestamp_add = 1000 * 60 * 60 * 24;
+                                var nowdate = new Date(timestamp - ((week - i) * timestamp_add));
+                                nowday[i] = nowdate.toISOString().substring(0, 10);
+                            }
                             col_ojt.insert(
                                 {
                                     user_id :req.session.user._id,
-                                    Mon: [],
-                                    Tus: [],
-                                    Wed: [],
-                                    Thu: [],
-                                    Fri: [],
-                                    Sat: []
-                                })
+                                    Mon: [nowday[1]],
+                                    Tus: [nowday[2]],
+                                    Wed: [nowday[3]],
+                                    Thu: [nowday[4]],
+                                    Fri: [nowday[5]],
+                                    Sat: [nowday[6]],
+                                    Sun: [nowday[7]]
+                                });
+                            console.log(nowday[1]);
+
+
                         }
                     }
                 });

@@ -9,9 +9,6 @@ $(function () {
         if (week == 0){
             week = 7;
         }
-        if (week == 1){
-            week = 8;
-        }
         var timestamp = date.getTime();
         var timestamp_add = 1000*60*60*24;
         var nowdate = new Date(timestamp-((week-i)*timestamp_add));
