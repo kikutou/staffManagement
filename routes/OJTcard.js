@@ -9,13 +9,70 @@ router.get('/', function(req, res) {
     //DataBase
     var mongodb = require('mongodb');
     var server = new mongodb.Server('localhost', 27017);
-    var db = mongodb.Db('staffManaement', server, {safe: true});
+    var db = mongodb.Db('staffManagement', server, {safe: true});
+
+    //現在時刻
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var day = now.getDate();
+    var week = now.getDay();
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (day < 10) {
+        day = '0' + day;
+    }
+    var datestr = year + '-' + month + '-' + day;
 
     if (req.session.user){
+        var col_ojt = db.collection('ojtcard');
         db.open(function (err, db) {
             if (err){
                 throw err;
             }else{
+                // switch (week)
+                // {
+                //     case 1:
+                //         var today = 'Mon';
+                //         break;
+                //     case 2:
+                //         var today = 'Tus';
+                //         break;
+                //     case 3:
+                //         var today = 'Wed';
+                //         break;
+                //     case 4:
+                //         var today = 'Thu';
+                //         break;
+                //     case 5:
+                //         var today = 'Fri';
+                //         break;
+                //     case 6:
+                //         var today = 'Sat';
+                //         break;
+                // }
+                // console.log(today);
+                col_ojt.find({'user_id': req.session.user._id, "today.date": datestr}).toArray(function (err, doc) {
+                    if (err){
+                        throw err;
+                    }else {
+                        console.log(doc);
+                        if (doc.length==0){
+                            col_ojt.insert(
+                                {
+                                    user_id :req.session.user._id,
+                                    Mon: [],
+                                    Tus: [],
+                                    Wed: [],
+                                    Thu: [],
+                                    Fri: [],
+                                    Sat: []
+                                })
+                        }
+                    }
+                });
+
                 res.render('OJTcard');
             }
         })
@@ -40,11 +97,11 @@ router.post('/', function (req, res) {
                 throw err;
             }else {
                 var ojt_data = req.body;
-                var ojt = {};
-                ojt['mon'] = ojt_data.
-                ojt['user_id'] = req.session.user._id;
-                ojt['date'] = datestr;
-                ojt['timestamp'] = ds;
+                // var ojt = {};
+                // ojt['mon'] = ojt_data.
+                // ojt['user_id'] = req.session.user._id;
+                // ojt['date'] = datestr;
+                // ojt['timestamp'] = ds;
                 
                 
             }
