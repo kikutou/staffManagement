@@ -46,7 +46,11 @@ router.get('/', function(req, res) {
                         break;
                 }
                 console.log(today);
-                col_ojt.find({'user_id': req.session.user._id, "today.&.date": datestr}).toArray(function (err, doc) {
+                var today_key = today + ".date";
+                var find_obj = {};
+                find_obj['user_id'] = req.session.user._id;
+                find_obj[today_key] = datestr;
+                col_ojt.find(find_obj).toArray(function (err, doc) {
                     if (err){
                         throw err;
                     }else {
@@ -83,6 +87,8 @@ router.get('/', function(req, res) {
                 res.render('OJTcard');
             }
         })
+    }else{
+        res.redirect('/login');
     }
 });
 
