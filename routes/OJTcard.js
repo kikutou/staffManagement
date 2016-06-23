@@ -43,8 +43,11 @@ router.get('/', function(req, res) {
                         var today = 'Sat';
                         break;
                 }
-                console.log(today);
-                col_ojt.find({'user_id': req.session.user._id, "today.&.date": datestr}).toArray(function (err, doc) {
+                var date_key = today + ".date";
+                var find_obj = {};
+                find_obj['user_id'] = req.session.user._id;
+                find_obj[date_key] = datestr;
+                col_ojt.find(find_obj).toArray(function (err, doc) {
                     if (err){
                         throw err;
                     }else {
