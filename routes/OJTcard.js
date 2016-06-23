@@ -15,8 +15,6 @@ router.get('/', function(req, res) {
     var now = new Date();
     var week = now.getDay();
     var datestr = now.toISOString().substring(0, 10);
-    console.log(datestr);
-    console.log('hello');
 
     if (req.session.user){
         var col_ojt = db.collection('ojtcard');
@@ -83,6 +81,8 @@ router.get('/', function(req, res) {
                 res.render('OJTcard');
             }
         })
+    }else {
+        res.redirect('/OJTcard');
     }
 });
 
