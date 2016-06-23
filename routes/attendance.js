@@ -1,130 +1,97 @@
 /**
  * Created by mamol on 16/06/14.
  */
+require('date-utils');
+var async = require('async');
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+/**
+ * 社員の出勤退勤ボタン、及び過去１週間の出退勤状況リストを表示する
+ */
 router.get('/', function(req, res) {
-    //DataBase
+
+    //DBの設定
     var mongodb = require('mongodb');
     var server = new mongodb.Server('localhost', 27017);
     var db = mongodb.Db('staffManagement', server, {safe: true});
-    //現在時刻
-    var now = new Date();
-    var y = now.getFullYear();
-    var m = now.getMonth() + 1;
-    var d = now.getDate();
-    if (m < 10) {
-        m = '0' + m;
-    }
-    if (d < 10) {
-        d = '0' + d;
-    }
-    var datestr = y + '-' + m + '-' + d;
-    //Get Weekday
-    var w = now.getDay();
-    //Get Timestamp
-    var ts = now.getTime();
-    var ds = Math.floor(ts / 1000 / 60 / 60 / 24);
 
+    /*
+     modified by kiku 2016/06/23
+     時間の設定方法を以下のサイトを参照してください。
+     http://qiita.com/n0bisuke/items/dd28122d006c95c58f9c
+     */
+    var now = new Date();
+    //日付を取得
+    var datestr = now.toFormat("YYYY-MM-DD");
+
+    //すでに登録したユーザーのみがアクセスできる。
     if (req.session.user){
         db.open(function (err, db) {
+
             if (err){
                 throw err;
             }else {
-                var msg = [];
+
+                var info = [];
+
                 var col_attendance = db.collection('attendance');
 
-                if (w == 1){
-                    w = 8;
-                }else if (w == 0){
-                    w = 7;
-                }
-                for (var i=0; i<w; i++){
-                    //建立闭包，保证循环进行
-                    (function (i) {
-                        col_attendance.find({user_id: req.session.user._id, timestamp: ds-i}).toArray(function (err, doc) {
-                            if (err){
-                                throw err;
-                            }else {
-                                var x = w - i;
-                                if (doc.length!=0){
-                                    //     msg['et'+ x] = null;
-                                    //     msg['lr'+ x] = null;
-                                    //     msg['lt'+ x] = null;
-                                    //     msg['eor'+ x] = null;
-                                    // }else {
-                                    msg['et'+ x] = doc[0].entrance_time;
-                                    msg['lr'+ x] = doc[0].late_reason;
-                                    msg['lt'+ x] = doc[0].leave_time;
-                                    msg['eor'+ x] = doc[0].E_O_reason;
+                var a = [0,1,2,3,4,5,6,7];
+
+                async.eachSeries(
+                    a,
+                    function (i, callback) {
+                        var the_day = new Date();
+                        the_day.setDate(now.getDate() - i);
+
+                        col_attendance.findOne(
+                            {user_id: req.session.user._id, date: the_day.toFormat("YYYY-MM-DD")},
+                            function (err, item) {
+                                if (err){
+                                    throw err;
+                                }else {
+                                    console.log(the_day.toFormat("YYYY-MM-DD"));
+                                    console.log(item);
+                                    info[i] = item;
+                                    callback();
                                 }
                             }
-                        })
-                    })(i)
-                }
-
-
-                col_attendance.find({user_id: req.session.user._id, date: datestr}).toArray(function (err, docs) {
-                    console.log(docs);
-
-                    if (err){
-                        throw err;
-                    }else {
-                        if (docs.length==0){
-                            res.render('attendance/attendance', msg);
-                        }else {
-                            if (docs[0].entrance_time){
-                                msg['result_enTime'] = true;
-                                msg['entrance'] = docs[0].entrance_time
-                            }
-                            if (docs[0].late_reason){
-                                msg['result_late'] = true;
-                                msg['rson_e'] = docs[0].late_reason
-                            }
-                            if (docs[0].leave_time){
-                                msg['result_lvTime'] = true;
-                                msg['leave'] = docs[0].leave_time
-                            }
-                            if (docs[0].E_O_reason){
-                                msg['result_E_O'] = true;
-                                msg['rson_l'] = docs[0].E_O_reason
-                            }
-                            console.log(msg);
-                            res.render('attendance/attendance', msg);
+                        );
+                    },
+                    function(error, results) {
+                        if (error) {
+                            console.log(error);
                         }
+
+                        console.log(info);
+
+                        res.render('attendance/attendance', {info:info});
                     }
-                })
+                );
             }
         })
     }else {
-        res.redirect('login')
+        res.redirect('/login')
     }
 });
 
 router.post('/', function (req, res) {
+
     //DataBase
     var mongodb = require('mongodb');
     var server = new mongodb.Server('localhost', 27017);
     var db = mongodb.Db('staffManagement', server, {safe: true});
+
     //現在時刻
+    /*
+     modified by kiku 2016/06/23
+     時間の設定方法を以下のサイトを参照してください。
+     http://qiita.com/n0bisuke/items/dd28122d006c95c58f9c
+     */
     var now = new Date();
-    var y = now.getFullYear();
-    var m = now.getMonth() + 1;
-    var d = now.getDate();
-    if (m < 10) {
-        m = '0' + m;
-    }
-    if (d < 10) {
-        d = '0' + d;
-    }
-    var datestr = y + '-' + m + '-' + d;
-    // //Get Weekday
-    // var w = now.getDay();
-    // //Get Timestamp
-    var ts = now.getTime();
-    var ds = Math.floor(ts / 1000 / 60 / 60 / 24);
+    //日付を取得
+    var datestr = now.toFormat("YYYY-MM-DD");
 
     if (req.body.logout){
         req.session.destroy(function () {
@@ -139,7 +106,6 @@ router.post('/', function (req, res) {
                 var attendance = req.body;
                 attendance['user_id'] = req.session.user._id;
                 attendance['date'] = datestr;
-                attendance['timestamp'] = ds;
 
                 var col_attendance = db.collection('attendance');
 
@@ -153,7 +119,8 @@ router.post('/', function (req, res) {
                         if (err){
                             throw err;
                         }else {
-                            res.redirect('/attendance')
+                            console.log(result);
+                            res.redirect('/attendance');
                         }
                     }
                 )

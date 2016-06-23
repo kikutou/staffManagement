@@ -11,7 +11,7 @@ html
         link(rel='stylesheet' type='text/css' href='/stylesheets/attendance.css')
         script(type='text/javascript' src='/javascripts/attendanceTime.js')
         //Import responses
-        include ../responses/res_attendance.jade
+        //include ../responses/res_attendance.jade
     body
         include ../top.jade
         div.att_box
@@ -20,40 +20,56 @@ html
                 div
                     div
                         form(method='post')
-                            button(type='submit' name='entrance_time')#entrance_button 入室確認
+                            -var disable = false
+                            if info.length > 0 && info[0].entrance_time
+                                -disabled = true
+                            button(type='submit' name='entrance_time' disabled=disabled)#entrance_button 入室確認
+
                     div
                         form(method='post')
+                            -var disable = false
+                            if info.length > 0 && info[0].late_reason
+                                -disabled = true
                             div
-                                input(type='text' placeholder='遅刻原因' name='late_reason')#late_text
+                                input(type='text' placeholder='遅刻原因' name='late_reason' disabled=disabled)#late_text
                             div
-                                input(type='submit' value='送信')#late_button
+                                input(type='submit' value='送信' disabled=disabled)#late_button
                 //退勤テキスト
                 div
                     div
                         form(method='post')
-                            button(type='submit' name='leave_time')#leave_button 退室確認
+                            -var disable = false
+                            if info.length > 0 && info[0].leave_time
+                                -disabled = true
+                            button(type='submit' name='leave_time' disabled=disabled)#leave_button 退室確認
                     div
                         form(method='post')
+                            -var disable = false
+                            if info.length > 0 && info[0].earyly_leave_reason
+                                -disabled = true
                             div
-                                input(type='text' placeholder='早退原因' name='E_O_reason')#E_O_text
+                                input(type='text' placeholder='早退原因' name='early_leave_reason' disabled=disabled)#E_O_text
                             div
-                                input(type='submit' value='送信')#E_O_button
+                                input(type='submit' value='送信' disabled=disabled)#E_O_button
             //一週間の出勤状態
             div.att_list
                 hr
                 table.att_table
-                    mixin time_list(note)
+                    each day in info
                         tr
-                            th(id= 'date_'+note rowspan='2').att_date
+                            if day && day.date
+                                th(id= 'date_'+note rowspan='2').att_date  #{day.date}
+                            else
+                                th(id= 'date_'+note rowspan='2').att_date
                             th.att_label 入室時間
-                            td(id= 'e_ti_'+note).att_time
+                            td(id= 'e_ti_' + note).att_time
                             th.att_label 遅刻原因
-                            td(id= 'l_re_'+note)
+                            td(id= 'l_re_' + note)
                         tr
                             th.att_label 退室時間
-                            td(id= 'l_ti_'+note).att_time
+                            td(id= 'l_ti_' + note).att_time
                             th.att_label 早退原因
-                            td(id= 'eo_re_'+note)
-                    -for (i=1; i<8; i++)
-                        +time_list(i)
+                            td(id= 'eo_re_' + note)
+
+
 
