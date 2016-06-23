@@ -26,7 +26,7 @@
             if (second < 10) {
                 second = '0' + second;
             }
-            var dateStr = year+"/"+month+"/"+day+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+hour+":"+minute+":"+second;
+            var dateStr = year+"-"+month+"-"+day+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+hour+":"+minute+":"+second;
             var dateTime = hour+":"+minute+":"+second;
 
             $("#entrance_button").val(dateTime);
@@ -56,19 +56,11 @@
                     $(this).html("退室確認");
                 });
 
-            for (var i=1; i<8; i++){
-                var week = date.getDay();
-                if (week == 0){
-                    week = 7;
-                }
-                if (week == 1){
-                    week = 8;
-                }
+            for (var i=0; i<8; i++){
                 var timestamp = date.getTime();
                 var timestamp_add = 1000*60*60*24;
-                var nowdate = new Date(timestamp-((week-i)*timestamp_add));
+                var nowdate = new Date(timestamp-(i*timestamp_add));
                 var nowday = nowdate.toLocaleDateString().replace('/', '-').replace('/', '-');
-
                 $("#date_"+ i).html(nowday);
             }
         }

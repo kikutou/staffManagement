@@ -54,6 +54,11 @@ router.get('/', function(req, res) {
                                     console.log(the_day.toFormat("YYYY-MM-DD"));
                                     console.log(item);
                                     info[i] = item;
+                                    if (info[i] == null){
+                                        info[i] = {date_id: i};
+                                    }else {
+                                        info[i].date_id = i
+                                    }
                                     callback();
                                 }
                             }
