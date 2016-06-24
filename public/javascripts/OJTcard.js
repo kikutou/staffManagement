@@ -12,32 +12,34 @@ $(function () {
         var timestamp = date.getTime();
         var timestamp_add = 1000*60*60*24;
         var nowdate = new Date(timestamp-((week-i)*timestamp_add));
-        var nowday = nowdate.toLocaleDateString().replace('/', '-').replace('/', '-');
+        var nowday = nowdate.toISOString().substring(0, 10);
+
+        var lastdate = new Date(timestamp-7-((week-i)*timestamp_add));
+        var lastday =  lastdate.toISOString().substring(0, 10);
 
         $("#ojt_day"+ i).html(nowday);
+        $("#ojt_day_hidden"+ i).val(nowday);
+        $('#re_content'+i).val($('#content'+i).text());
+        $('#re_self_report'+i).val($('#self_report'+i).text());
+        $('#re_percent'+i).val($('#percent'+i).text());
+
+        $("#last_day"+ i).html(lastday)
     }
     
     $('#modify').click(
         function () {
-            $('#study_sub').attr('disabled', true);
+            $('#study_sub').show();
             $('.study_text').show();
             $('.study_content').hide();
             $('#modify').hide();
-            $('#enter').show()
         }
     );
-    $('#enter').click(
+    $('#study_sub').click(
         function () {
-            $('#study_sub').attr('disabled', false);
-            for (var j=1; j<8; j++){
-                $('#content'+j).html($('#re_content'+j).val());
-                $('#self_report'+j).html($('#re_self_report'+j).val())
-            }
             $('.study_text').hide();
             $('.study_content').show();
             $('#modify').show();
-            $('#enter').hide()
+            $('#study_sub').hide()
         }
     );
-    
 });

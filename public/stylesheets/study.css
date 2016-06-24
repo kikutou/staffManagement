@@ -17,6 +17,7 @@ td{
 }
 
 .study_date{
+    height: 30px;
     width: 15%;
     text-align: center;
 }

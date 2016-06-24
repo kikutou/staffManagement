@@ -27,32 +27,63 @@ html
                         tr
                             th 習得技術内容
                             th(style='width: 10%') 達成率
-                        form
-                            mixin table(day)
-                                tr
-                                    td.study_date(id='ojt_day'+day name='ojt_day'+day)
-                                    td
-                                        input.study_text(type='text' id='re_content'+day name='content'+day hidden)
-                                        span.study_content(id='content'+day)
-                                    td
-                                        input.study_text(type='text' id='re_self_report'+day name='self_report'+day hidden)
-                                        span.study_content(id='self_report'+day)
-                                    td: select(name='percent'+day)
+
+                        -var week_day = ['Mon', 'Tus', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        each day0, week in week_day
+                            -var day = week + 1
+                            -var info = week0[day0]
+                            tr
+                                td.study_date(id='ojt_day'+day)
+                                td
+                                    input.study_text(type='text' id='re_content'+day name='content'+day hidden)
+                                    span.study_content(id='content'+day) #{info.content}
+                                td
+                                    input.study_text(type='text' id='re_self_report'+day name='self_report'+day hidden)
+                                    span.study_content(id='self_report'+day) #{info.self_report}
+                                td
+                                    select.study_text(id='re_percent'+day name='percent'+day hidden)
+                                        option
                                         option 100%
                                         option 90%
                                         option 80%
                                         option 60%
                                         option 未達成
-                            -for (var i=1; i<8; i++)
-                                +table(i)
+                                    span.study_content(id='percent'+day) #{info.percent}
+                                td(hidden)
+                                    input(id='ojt_day_hidden'+day type='date' name='ojt_day'+day)
 
                     div.study_block
                         div.study_submit
-                            input(type='submit' value='送信')#study_sub
-                        div.study_modify
+                            input(type='submit' value='送信' hidden=)#study_sub
+                        div.study_submit
                             input(type='button' value='入力')#modify
-                        div.study_modify
-                            input(type='button' value='確認' hidden)#enter
+
+            div.study_table
+                hr
+                h3 先週評価
+                table
+                    tr
+                        th(rowspan='2' style='width: 10%') 日期
+                        th(rowspan='2' style='width: 20%') 研修内容
+                        th(colspan='2') 自己申告
+                    tr
+                        th 習得技術内容
+                        th(style='width: 10%') 達成率
+
+                    -var week_day = ['Mon', 'Tus', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    each day1, week in week_day
+                        -var day = week + 1
+                        tr
+                            td(id='last_day' + day)
+                            if week1 != null
+                                -var info = week1[day1]
+                                td #{info.content}
+                                td #{info.self_report}
+                                td #{info.percent}
+                            else
+                                td
+                                td
+                                td
 
             div.study_table
                 hr
@@ -60,7 +91,4 @@ html
                     div.study_block
                         label.study_label 先生評価
                     div.study_block
-                        textarea.study_evaluation(name='t_evaluation')
-                    div.study_block
-                        div.study_submit
-                            input(type='submit' value='送信')
+                        p 内容なし
