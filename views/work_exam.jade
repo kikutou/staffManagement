@@ -10,35 +10,39 @@ html
         //Import script & css
         style(type='text/css').
             table{border-collapse: collapse;}
-            table, th, td{border: 1px solid black;}
+            table, th, td{border: 1px solid #000000;}
             td{text-align: center;}
             select, option{height: 40px;}
         link(rel='styleSheet' type='text/css' href='/stylesheets/exam.css')
 
     body
         include top.jade
-        include side_bar
 
         div.box
             div(style='text-align: center')
-                h1 平成　　年　月　～　平成　　年　月　【行動基準評定】
+                h1 【行 動 基 準 評 定】
             div
                 div.exam_label 行動基準評定の評点
                 div.exam_number
-                    form(action='' method='get') 研修番号:
-                        input#student_number(type='text' name='staff_number')
-                        input(type='submit' value='決定')
+                    form(method='post')
+                        input#exam_start(type='submit' name='exam_start') 三ヶ月の行動基準評定を開始
+                    p(hidden) 平成　　年　月　～　平成　　年　月
 
             div.exam_table
                 hr
                 form(method='post')
                     table
                         tr
-                            th(colspan='2') 項目
-                            th 定義
-                            th 望ましい行動例
-                            th 本人$x次
-                            th 先生評価
+                            th(colspan='2' rowspan='2') 項目
+                            th(rowspan='2') 定義
+                            th(rowspan='2') 望ましい行動例
+                            th 本人
+                            th(rowspan='2') 先生評価
+                        tr
+                            td: select(style='height: 30px')
+                                option １回
+                                option(disabled=true) ２回
+                                option(disabled=true) ３回
 
                         mixin slt(note)
                             td
@@ -47,10 +51,7 @@ html
                                     option(value='true') ◯
                                     option(value='false') ❌
                             td
-                                select(name='teacher_'+note)
-                                    option
-                                    option(value='true') ◯
-                                    option(value='false') ❌
+                                p
 
                         tr
                             td 1
@@ -197,8 +198,8 @@ html
                             td 新しいことに取り組むときには、手順や必要なことを洗い出している
                             +slt('11_2')
                     p(style='text-align: right')
-                        label 合計点
-                        input(type='text' name='exam_point')
-                        label サイン
-                        input(type='text' name='exam_sign')
+                        //label 合計点
+                        //input(type='text' name='exam_point')
+                        //label サイン
+                        //input(type='text' name='exam_sign')
                         input(type='submit' value='送信')

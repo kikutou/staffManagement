@@ -4,6 +4,14 @@
 var express = require('express');
 var router = express.Router();
 
+//現在時刻
+var now = new Date();
+var year = now.getFullYear();
+var month = now.getMonth();
+var day = now.getDate();
+
+var datestr = now.toISOString().substring(0, 7);
+
 /* GET users listing. */
 router.get('/', function(req, res) {
     res.render('work_exam');
@@ -16,44 +24,61 @@ router.post('/', function (req, res) {
             res.redirect('/login')
         })
     }else{
+        //DataBase
         var mongodb = require('mongodb');
         var server = new mongodb.Server('localhost', 27017);
-        var db = mongodb.Db('staffexam', server, {safe: true});
+        var db = mongodb.Db('staffManagement', server, {safe: true});
 
         db.open(function (err, db) {
             if (err){
                 throw err
             }else{
-                var exam = req.body;
                 var col_exam = db.collection('exam');
-                var col_users = db.collection('users');
 
-                col_exam.insert(exam, function (err, result) {
-                    if (err){
-                        throw err;
-                    }else{
-                        if (req.session.user.staff_occupation=='管理者'){
-                            console.log('管理者login')
-                        }else{
-                            console.log('普通社員login')
-                        }
+                if (req.body.exam_start){
+                    var new_col = {};
+                    new_col['user_id'] = req.session.user._id;
+                    new_col['frequency_1'] = {};
+                    new_col['frequency_2'] = {};
+                    new_col['frequency_3'] = {};
 
-
-                        col_exam.update(
-                            {_id: exam._id},
-                            {$set: {user_id: req.session.user._id, user_name: req.session.user.staff_name}},
-                            {
-                                upsert: true,
-                                multi: true
-                            }
-                        );
-                        //查看结果
-                        col_exam.find({_id: exam._id}).toArray(function (err, doc) {
-                            console.log(doc);
-                            res.redirect('/work_exam')
-                        })
-                    }
-                })
+                    col_exam.insert(new_col);
+                    //     , function (err, doc) {
+                    //     if (err){
+                    //         throw err
+                    //     }else {
+                    //         //if (day<20){
+                    //             console.log(doc);
+                    //         //}
+                    //     }
+                    // })
+                }
+                
+                // exam['user_id'] = req.session.user._id;
+                // exam['date'] = datestr;
+                // if (day>20){
+                //     exam['frequency'] = 3
+                // }else if (day>10 && day<21){
+                //     exam['frequency'] = 2
+                // }else {
+                //     exam['frequency'] = 1
+                // }
+                //
+                // col_exam.update(
+                //     {user_id: exam['user_id'], date: exam['date'], frequency: exam['frequency']},
+                //     {$set: exam},
+                //     {
+                //         upsert: true,
+                //         multi: true
+                //     }, function (err, result) {
+                //         if (err){
+                //             throw err
+                //         }else {
+                //             console.log(result);
+                //             res.redirect('/work_exam')
+                //         }
+                //     }
+                // );
             }
         })
     }
