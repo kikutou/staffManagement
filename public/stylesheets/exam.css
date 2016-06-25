@@ -3,7 +3,7 @@
     margin-left: 3%;
 }
 
-.exam_number{
+.exam_start{
     float: right;
     margin-right: 3%;
 }
@@ -11,4 +11,12 @@
 .exam_table{
     float: left;
     width: 100%;
+}
+
+.table_2{
+    display: none;
+}
+
+.table_3{
+    display: none;
 }
