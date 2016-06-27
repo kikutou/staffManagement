@@ -165,7 +165,7 @@ router.get('/', function(req, res) {
             }
         })
     }else {
-        res.redirect('/OJTcard');
+        res.redirect('/login');
     }
 });
 

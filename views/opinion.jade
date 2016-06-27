@@ -12,21 +12,24 @@ html
 
     body
         include top.jade
-        include side_bar
         div.box
             form(method='post')
                 ul
-                    li 先生、先輩及び直接担当者に要望したいこと、改善してほしいこと
-                        br
-                        textarea(placeholder='あなたの意見を書いてください' name='demand')
-                        hr
-                    li 今後、２～３年間にあなたが担当したい職務内容、又は自己の進みたい方向など
-                        br
-                        textarea(placeholder='あなたの希みを書いてください' name='take_on')
-                        hr
-                    li 会社に対する感想や意見や希望
-                        br
-                        textarea(placeholder='あなたの感想を書いてください' name='opinion')
-                        hr
-                br
-                input.opinion_submit(type='submit' value='送信')
+                    div
+                        li 先生、先輩及び直接担当者に要望したいこと、改善してほしいこと
+                            br
+                            textarea(placeholder='あなたの意見を書いてください' name='demand')
+                            hr
+                    div
+                        li 今後、２～３年間にあなたが担当したい職務内容、又は自己の進みたい方向など
+                            br
+                            textarea(placeholder='あなたの希みを書いてください' name='take_on')
+                            hr
+                    div
+                        li 会社に対する感想や意見や希望
+                            br
+                            textarea(placeholder='あなたの感想を書いてください' name='opinion')
+                            hr
+                    div
+                        br.opinion_submit
+                        input(type='submit' value='送信')

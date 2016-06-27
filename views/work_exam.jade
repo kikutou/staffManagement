@@ -225,17 +225,21 @@ html
                             input(type='submit' id='fre_'+fre name='fre_'+fre value='送信' style="display:" +display0)
 
                 if info==null
+                    //評定が始まりませ
                     +tab('1', 'none', 'table-cell', 'inline-table')
                 else
+                    //評定１回
                     if info.frequency_1.info==false
                         +tab('1', 'table-cell', 'none', 'inline-table')
                     else
+                        //評定２回
                         if info.frequency_2.info==false
                             +tab('1', 'none', 'table-cell', 'none')
                             +tab('2', 'table-cell', 'none', 'inline-table')
                         else
                             +tab('1', 'none', 'table-cell', 'none')
                             +tab('2', 'none', 'table-cell', 'none')
+                            //評定３回
                             if info.frequency_3.info==false
                                 +tab('3', 'table-cell', 'none', 'inline-table')
                             else

@@ -68,7 +68,7 @@ router.post('/', function (req, res) {
             res.redirect('/login')
         })
     }else{
-        //DataBase
+        //DBの設定
         var mongodb = require('mongodb');
         var server = new mongodb.Server('localhost', 27017);
         var db = mongodb.Db('staffManagement', server, {safe: true});
@@ -78,7 +78,7 @@ router.post('/', function (req, res) {
                 throw err
             }else{
                 var col_exam = db.collection('exam');
-
+                //評定が始めるとき、ユーザの評定クラクションを作ります
                 if (req.body.exam_start){
                     var new_col = {};
                     new_col['user_id'] = req.session.user._id;
@@ -90,6 +90,7 @@ router.post('/', function (req, res) {
                         if (err){
                             throw err
                         }else {
+                            //もし評定が始める日は当月の２０日以後なら、評定は来月に始めるになります
                             if (day<20){
                                 col_exam.update(
                                     {user_id: req.session.user._id},
@@ -127,6 +128,7 @@ router.post('/', function (req, res) {
                             throw err
                         }else {
                             if (exam.fre_1){
+                                //評定１回
                                 exam['date'] = doc[0].frequency_1.date;
                                 exam['info'] = true;
                                 col_exam.update(
@@ -142,6 +144,7 @@ router.post('/', function (req, res) {
                                     }
                                 )
                             }else if (exam.fre_2) {
+                                //評定２回
                                 exam['date'] = doc[0].frequency_2.date;
                                 exam['info'] = true;
                                 col_exam.update(
@@ -157,6 +160,7 @@ router.post('/', function (req, res) {
                                     }
                                 )
                             }else {
+                                //評定３回
                                 exam['date'] = doc[0].frequency_3.date;
                                 exam['info'] = true;
                                 col_exam.update(
@@ -174,8 +178,6 @@ router.post('/', function (req, res) {
                             }
                         }
                     })
-
-
                 }
             }
         })

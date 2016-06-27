@@ -43,18 +43,35 @@
             $("#leave_button").mouseenter(
                 function(){
                     $(this).html("現在の時間："+dateStr);
-                });
+                }
+            );
 
             // hide localtime
             $("#entrance_button").mouseleave(
                 function () {
                     $(this).html("入室確認");
-                });
+                }
+            );
 
             $("#leave_button").mouseleave(
                 function () {
                     $(this).html("退室確認");
-                });
+                }
+            );
+
+            $("#entrance_button").click(
+                function () {
+                    $(this).html("入室時間："+dateStr);
+                }
+            );
+
+            $("#leave_button").mouseenter(
+                function(){
+                    $(this).html("退室時間："+dateStr);
+                }
+            );
+
+
 
             for (var i=0; i<8; i++){
                 var timestamp = date.getTime();

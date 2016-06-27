@@ -3,11 +3,20 @@
  */
 var express = require('express');
 var router = express.Router();
+//現在時刻
+var now = new Date();
+var datestr = now.toISOString().substring(0, 10);
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-    res.render('report');
+    if (req.session.user){
+        res.render('report');
+    }else {
+        res.redirect('/login');
+    }
 });
+
+
 
 router.post('/', function (req, res) {
     if (req.body.logout){
@@ -18,33 +27,25 @@ router.post('/', function (req, res) {
     }else{
         var mongodb = require('mongodb');
         var server = new mongodb.Server('localhost', 27017);
-        var db = mongodb.Db('staffexam', server, {safe: true});
+        var db = mongodb.Db('staffManagement', server, {safe: true});
 
         db.open(function (err, db) {
             if (err){
                 throw err
             }else{
                 var report = req.body;
+                report['user_id'] = req.session.user._id;
+                report['date'] = datestr;
+
                 var col_report = db.collection('report');
-                var col_users = db.collection('users');
 
                 col_report.insert(report, function (err, result) {
                     if (err){
                         throw err;
                     }else{
-                        col_report.update(
-                            {_id: report._id},
-                            {$set: {user_id: req.session.user._id, user_name: req.session.user.staff_name}},
-                            {
-                                upsert: true,
-                                multi: true
-                            }
-                        );
                         //查看结果
-                        col_report.find({_id: report._id}).toArray(function (err, doc) {
-                            console.log(doc);
-                            res.redirect('/report')
-                        })
+                        console.log(result);
+                        res.redirect('/report')
                     }
                 })
             }

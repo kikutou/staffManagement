@@ -12,6 +12,29 @@
     font-size: 80px;
 }
 
+.top_label{
+    position: absolute;
+    width: 80%;
+    height: 10%;
+    margin-left: 8.5%;
+    margin-top: 12.7%;
+
+}
+
+.top_attendance{
+    width: 17.6%;
+    height: 50%;
+    float: left;
+    margin-left: 2%;
+    text-align: center;
+    background-color: orangered;
+    font-size: larger;
+}
+
+.top_text{
+    margin-top: 8%;
+}
+
 .logout{
     float: right;
     margin-right: 1%;
