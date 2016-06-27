@@ -58,18 +58,7 @@
                     $(this).html("退室確認");
                 }
             );
-
-            $("#entrance_button").click(
-                function () {
-                    $(this).html("入室時間："+dateStr);
-                }
-            );
-
-            $("#leave_button").mouseenter(
-                function(){
-                    $(this).html("退室時間："+dateStr);
-                }
-            );
+            
 
 
 
