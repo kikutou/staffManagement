@@ -14,7 +14,7 @@ $(function () {
         var nowdate = new Date(timestamp-((week-i)*timestamp_add));
         var nowday = nowdate.toISOString().substring(0, 10);
 
-        var lastdate = new Date(timestamp-7-((week-i)*timestamp_add));
+        var lastdate = new Date(timestamp-((week-i+7)*timestamp_add));
         var lastday =  lastdate.toISOString().substring(0, 10);
 
         $("#ojt_day"+ i).html(nowday);

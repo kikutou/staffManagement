@@ -2,54 +2,29 @@
  * Created by mamol on 16/06/25.
  */
 $(function () {
-    $("#select_1").val("１回");
-    $("#select_2").val("２回");
-    $("#select_3").val("３回");
+    $("#chose1").click(function () {
+        $("#form_1").css('display', 'inline-table');
+        $("#form_2").css('display', 'none');
+        $("#form_3").css('display', 'none');
+    });
+    $("#chose2").click(function () {
+        $("#form_2").css('display', 'inline-table');
+        $("#form_1").css('display', 'none');
+        $("#form_3").css('display', 'none');
+    });
+    $("#chose3").click(function () {
+        $("#form_3").css('display', 'inline-table');
+        $("#form_1").css('display', 'none');
+        $("#form_2").css('display', 'none');
+    });
 
-    $(".exam_op_1").select(
-        function () {
-            alert('1');
-            $("#table_1").show();
-            $("#table_2").hide();
-            $("#table_3").hide()
-
-        }
-    );
-    $(".exam_op_2").select(
-        function () {
-            alert("2");
-            $("#table_2").show();
-            $("#table_1").hide();
-            $("#table_3").hide()
-
-        }
-    );
-    $(".exam_op_3").select(
-        function () {
-            alert("3");
-            $("#table_3").show();
-            $("#table_1").hide();
-            $("#table_2").hide()
-
-        }
-    );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    $("#fre_1").click(function () {
+        $("#form_1").validationEngine();
+    });
+    $("#fre_2").click(function () {
+        $("#form_2").validationEngine();
+    });
+    $("#fre_3").click(function () {
+        $("#form_3").validationEngine();
+    });
 });
