@@ -43,6 +43,10 @@ router.get('/att_checking', function (req, res) {
     res.redirect('/admin')
 });
 
+router.get('/set', function (req, res) {
+    res.redirect('/admin')
+});
+
 
 
 router.post('/', function (req, res) {
@@ -58,6 +62,7 @@ router.post('/', function (req, res) {
     }
 });
 
+//出勤一覧
 router.post('/att_checking', function (req, res) {
     console.log('post to att_checking');
     //DBの設定
@@ -125,6 +130,63 @@ router.post('/att_checking', function (req, res) {
                 );
             }
         });
+    }
+});
+
+//社員情報設定
+router.post('/set', function (req, res) {
+    console.log('post to set');
+    //DBの設定
+    var mongodb = require('mongodb');
+    var server = new mongodb.Server('localhost', 27017);
+    var db = mongodb.Db('staffManagement', server, {safe: true});
+
+    if (req.body.logout){
+        req.session.destroy(function () {
+            console.log('user logout');
+            res.redirect('/login')
+        })
+    }else if (req.body.admin || req.body.back){
+        res.redirect('/admin')
+    }else if (req.body.set_modify){
+        db.open(function (err, db) {
+            if (err){
+                throw err
+            }else {
+                var col_user = db.collection('users');
+                var id_str = req.body.staff_id;
+                console.log(id_str);
+                col_user.update(
+                    {_id: id_str},
+                    {$set: req.body},
+                    {
+                        upsert: false
+                    },function (err, item) {
+                        if (err){
+                            throw err
+                        }else {
+                            console.log(item);
+                            res.render('adminpage/set', {info: item});
+                        }
+                    }
+                )
+            }
+        })
+    }else {
+        db.open(function (err, db) {
+            if (err){
+                throw err
+            }else {
+                var col_user = db.collection('users');
+                col_user.findOne(req.body, function (err, item) {
+                    if (err){
+                        throw err
+                    }else {
+                        res.render('adminpage/set', {info: item});
+                    }
+                })
+            }
+        })
     }
 });
 

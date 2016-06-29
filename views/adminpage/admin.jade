@@ -9,7 +9,6 @@ html
         include ../jQuery_import.jade
         //Import script & css
         link(rel='stylesheet' type='text/css' href='/stylesheets/admin.css')
-        script(type='text/javascript' src='/javascripts/admin.js')
 
     body
         include ../top.jade
@@ -18,21 +17,47 @@ html
             div.staff_table#staff_table
                 table
                     tr
-                        th 社員ID
+                        th 社員メール
                         th 社員名前
                         th 社員区分
-                    mixin tab(user_id, user_name, user_occp, button_id)
+                        th(colspan='5') 社員情報設定＆一覧
+                    mixin tab(user_name, user_email, user_occpation, button_id, text_id)
                         tr
-                            td=user_id
                             td=user_name
-                            td=user_occp
+                            td=user_email
+                            td=user_occpation
                             td
-                                button(id='staff_info_'+ button_id) 情報詳細
+                                form(method='post' action='/admin/set')
+                                    input(type='text' id='staff_info_'+ button_id name='staff_email' value=text_id hidden)
+                                    input(type='submit' value='情報詳細')
+                            td
+                                form(method='post' action='/admin/att_checking')
+                                    input(type='text' name='staff_id' value=text_id hidden)
+                                    input(type='text' name='staff_name' value=user_name hidden)
+                                    input(type='submit' name='att_checking' value='出勤時間一覧')
+                            td
+                                form(method='post' action='/admin/att_checking')
+                                    input(type='text' name='staff_id' value=text_id hidden)
+                                    input(type='text' name='staff_name' value=user_name hidden)
+                                    input(type='submit' name='att_checking' value='行動基準評定')
+                            td
+                                form(method='post' action='/admin/att_checking')
+                                    input(type='text' name='staff_id' value=text_id hidden)
+                                    input(type='text' name='staff_name' value=user_name hidden)
+                                    input(type='submit' name='att_checking' value='OJT研修力カード')
+                            td
+                                form(method='post' action='/admin/att_checking')
+                                    input(type='text' name='staff_id' value=text_id hidden)
+                                    input(type='text' name='staff_name' value=user_name hidden)
+                                    input(type='submit' name='att_checking' value='社員意見')
 
                     -for (var i=0; i<info.length; i++)
-                        +tab(info[i]._id, info[i].staff_name, info[i].staff_occupation, i)
+                        +tab(info[i].staff_name, info[i].staff_email, info[i].staff_occupation, i, info[i]["staff_email"])
 
-            -for (var i=0; i<info.length; i++)
+                    -var a = info.length
+                    include ../responses/res_admin.jade
+
+//            -for (var i=0; i<info.length; i++)
                 div.info_table(id='info_table_'+i hidden)
                     div
                         mixin detail(detail_head, detail_data, no_id)
@@ -78,5 +103,4 @@ html
                             input(type='text' name='staff_name' value=info[i]["staff_name"] hidden)
                             input(type='submit' name='att_checking' value='社員意見')
 
-        -var a = info.length
-        include ../responses/res_admin.jade
+
