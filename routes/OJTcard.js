@@ -181,6 +181,8 @@ router.post('/', function (req, res) {
             console.log('user logout');
             res.redirect('/login')
         })
+    }else if (req.body.admin){
+        res.redirect('/admin')
     }else {
         db.open(function (err, db) {
             if (err){

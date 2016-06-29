@@ -16,8 +16,8 @@ var OJTcard = require('./routes/OJTcard');
 var work_exam = require('./routes/work_exam');
 var report = require('./routes/report');
 var opinion = require('./routes/opinion');
-
 var attendance = require('./routes/attendance');
+var admin = require('./routes/admin');
 
 var test = require('./routes/test');
 
@@ -61,8 +61,8 @@ app.use('/OJTcard', OJTcard);
 app.use('/work_exam', work_exam);
 app.use('/report', report);
 app.use('/opinion', opinion);
-
 app.use('/attendance', attendance);
+app.use('/admin', admin);
 
 app.use('/test', test);
 

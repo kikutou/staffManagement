@@ -22,6 +22,8 @@ router.post('/', function (req, res) {
             console.log('user logout');
             res.redirect('login')
         })
+    }else if (req.body.admin){
+        res.redirect('/admin')
     }else{
         var mongodb = require('mongodb');
         var server = new mongodb.Server('localhost', 27017);

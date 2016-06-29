@@ -1,0 +1,32 @@
+//
+   Created by mamol on 16/06/28.
+
+script.
+    for (var i=0; i< #{a}; i++) {
+        (function (i) {
+            $('#staff_info_' + i).click(function () {
+                $('#info_table_' + i).show();
+                //table control
+                for (var j=0; j< #{a}; j++){
+                    (function (j) {
+                        if (j != i){
+                            $('#info_table_' + j).hide();
+                        }
+                    })(j)
+                }
+                //text control
+                for (var k=0; k<11; k++){
+                    (function (k) {
+                        $("#info_modify_"+ i +"_"+ k).click(function () {
+                            $("#info_input_"+ i + "_"+ k).val($("#info_text_"+ i + "_"+ k).html());
+                            $("#info_td_"+ i + "_"+ k).show();
+                            $("#info_ok_"+ i + "_"+ k).show();
+                            $("#info_text_"+ i + "_"+ k).hide();
+                            $("#info_modify_"+ i +"_"+ k).hide()
+                        })
+                    })(k)
+                }
+            })
+        })(i)
+    }
+

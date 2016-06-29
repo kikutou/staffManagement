@@ -76,6 +76,8 @@ router.post('/', function (req, res) {
         db.open(function (err, db) {
             if (err){
                 throw err
+            }else if (req.body.admin){
+                res.redirect('/admin')
             }else{
                 var col_exam = db.collection('exam');
                 //評定が始めるとき、ユーザの評定クラクションを作ります

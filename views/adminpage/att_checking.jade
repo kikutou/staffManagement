@@ -1,0 +1,46 @@
+//
+   Created by mamol on 16/06/28.
+
+doctype html
+html
+    head
+        title 社員出勤時間一覧
+        meta(charset='UTF-8')
+        //Import jQuery
+        include ../jQuery_import.jade
+        //Import script & css
+        script(type='text/javascript' src='/javascripts/adminpage/att_checking.js')
+    body
+        include ../top.jade
+        div
+            div
+                div
+                    p #{info.user_id}
+                div
+                    p #{info.user_name}
+            div
+                table
+                    each day in info['att_data']
+                        tr
+                            th(id='date_#{day.date_id}' rowspan='2').att_checking_date
+                            th.att_label 入室時間
+                            if day
+                                td.att_time #{day.entrance_time}
+                            else
+                                td.att_time
+                            th.att_label 遅刻原因
+                            if day
+                                td #{day.late_reason}
+                            else
+                                td
+                        tr
+                            th.att_label 退室時間
+                            if day
+                                td.att_time #{day.leave_time}
+                            else
+                                td.att_time
+                            th.att_label 早退原因
+                            if day
+                                td #{day.early_leave_reason}
+                            else
+                                td

@@ -51,7 +51,7 @@ router.get('/', function(req, res) {
                                 if (err){
                                     throw err;
                                 }else {
-                                    console.log(the_day.toFormat("YYYY-MM-DD"));
+                                    // console.log(the_day.toFormat("YYYY-MM-DD"));
                                     console.log(item);
                                     info[i] = item;
                                     if (info[i] == null){
@@ -103,6 +103,8 @@ router.post('/', function (req, res) {
             console.log('user logout');
             res.redirect('/login')
         })
+    }else if (req.body.admin){
+        res.redirect('/admin')
     }else {
         db.open(function (err, db) {
             if (err){
