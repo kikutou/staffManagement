@@ -39,11 +39,13 @@ html
                             tr
                                 th=detail_head
                                 td(id='info_text_'+i+'_'+no_id)=info[i][detail_data]
-                                td(id='info_td_'+i+'_'+no_id hidden)
+                                td(id='info_td0_'+i+'_'+no_id hidden)
                                     input(id='info_input_'+i+'_'+no_id type='text')
+                                td(id='info_td1_'+i+'_'+no_id hidden)
+                                    button(id='info_ok_' + i + '_' + no_id hidden) 確認
                                 td
                                     button(id='info_modify_'+i+'_'+no_id) 修正
-                                    button(id='info_ok_'+i+'_'+no_id hidden) 確認
+
 
                         table
                             +detail('社員ID', '_id', 0)
