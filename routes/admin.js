@@ -226,6 +226,16 @@ router.post('/exam_checking', function (req, res) {
                 var info = {};
                 info['user_name'] = req.body.staff_name;
                 info['id'] = req.body.staff_id;
+                info['data'] = {};
+
+                col_exam.find({"_id" : ObjectId(req.body.staff_id)}).toArray(function (err, item) {
+                    if (err){
+                        throw err
+                    }else {
+                        console.log(item);
+                        res.render('adminpage/exam_checking', info)
+                    }
+                })
             }
         })
     }
