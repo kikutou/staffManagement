@@ -6,6 +6,8 @@ var async = require('async');
 var express = require('express');
 var router = express.Router();
 
+var ObjectId = require('mongodb').ObjectID;
+
 router.get('/', function (req, res) {
     //DBの設定
     var mongodb = require('mongodb');
@@ -47,6 +49,9 @@ router.get('/set', function (req, res) {
     res.redirect('/admin')
 });
 
+router.get('/exam_checking', function (req, res) {
+    res.redirect('/admin')
+});
 
 
 router.post('/', function (req, res) {
@@ -157,16 +162,22 @@ router.post('/set', function (req, res) {
                 var id_str = req.body.staff_id;
                 console.log(id_str);
                 col_user.update(
-                    {_id: id_str},
+                    {"_id" : ObjectId(id_str)},
                     {$set: req.body},
                     {
                         upsert: false
-                    },function (err, item) {
+                    },function (err, result) {
                         if (err){
                             throw err
                         }else {
-                            console.log(item);
-                            res.render('adminpage/set', {info: item});
+                            col_user.find({"_id" : ObjectId(id_str)}).toArray(function (err, item) {
+                                if (err){
+                                    throw err
+                                }else {
+                                    console.log(item);
+                                    res.render('adminpage/set', {info: item[0]});
+                                }
+                            });
                         }
                     }
                 )
@@ -178,13 +189,43 @@ router.post('/set', function (req, res) {
                 throw err
             }else {
                 var col_user = db.collection('users');
-                col_user.findOne(req.body, function (err, item) {
+                col_user.find({"_id" : ObjectId(req.body.staff_id)}).toArray(function (err, item) {
                     if (err){
                         throw err
                     }else {
-                        res.render('adminpage/set', {info: item});
+                        res.render('adminpage/set', {info: item[0]});
                     }
                 })
+            }
+        })
+    }
+});
+
+//社員行動基準評定
+router.post('/exam_checking', function (req, res) {
+    console.log('post to exam_checking');
+    //DBの設定
+    var mongodb = require('mongodb');
+    var server = new mongodb.Server('localhost', 27017);
+    var db = mongodb.Db('staffManagement', server, {safe: true});
+
+    if (req.body.logout){
+        req.session.destroy(function () {
+            console.log('user logout');
+            res.redirect('/login')
+        })
+    }else if (req.body.admin || req.body.back){
+        res.redirect('/admin')
+    }else {
+        db.open(function (err, db) {
+            if (err){
+                throw err
+            }else {
+                var col_exam = db.collection('exam');
+
+                var info = {};
+                info['user_name'] = req.body.staff_name;
+                info['id'] = req.body.staff_id;
             }
         })
     }
