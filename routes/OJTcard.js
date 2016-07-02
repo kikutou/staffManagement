@@ -140,6 +140,8 @@ router.get('/', function(req, res) {
                                 a,
                                 function (i, callback) {
                                     var find_obj = [find_obj0, find_obj1];
+                                    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>');
+                                    console.log(find_obj0);
                                     col_ojt.findOne(find_obj[i], function (err, item) {
                                         if (err) {
                                             throw err;

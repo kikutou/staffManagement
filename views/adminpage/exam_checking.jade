@@ -1,74 +1,57 @@
 //
-   Created by mamol on 16/06/15.
-doctype
+   Created by mamol on 16/07/01.
+doctype html
 html
     head
-        title 行動基準評定
+        title 社員行動基準評定
         meta(charset='UTF-8')
         //Import jQuery
-        include jQuery_import.jade
+        include ../jQuery_import.jade
         //Import script & css
-        style(type='text/css').
-            table{border-collapse: collapse;}
-            table, th, td{border: 1px solid #000000;}
-            td{text-align: center;}
-            select, option{height: 40px;}
-        link(rel='styleSheet' type='text/css' href='/stylesheets/exam.css')
-        script(type='text/javascript' src='/javascripts/work_exam.js')
-
     body
-        include top.jade
+        include ../top.jade
 
         div.box
             div(style='text-align: center')
                 h1 【行 動 基 準 評 定】
-                mixin chose(disabled0, disabled1, disabled2)
-                    button#chose1(disabled= disabled0) １回
-                    button#chose2(disabled= disabled1) ２回
-                    button#chose3(disabled= disabled2) ３回
-                if info == null
-                    +chose(true, true, true)
-                else
-                    if info.frequency_1.info == false
-                        +chose(false, true, true)
-                    else
-                        if info.frequency_2.info == false
-                            +chose(false, false, true)
-                        else
-                            +chose(false, false, false)
+            div
+                button#chose1 １回
+                button#chose2 ２回
+                button#chose3 ３回
 
             div
-                div.exam_label 行動基準評定の評点
+                div.exam_label="社員名前："+info.user_name
                 div.exam_start
-                    if info!=null
-                        span 評定時間：　#{info.frequency_1.date}～#{info.frequency_3.date}
+                    if info['data'] != null
+                        span 評定時間：　#{info.data.frequency_1.date}～#{info.data.frequency_3.date}
                     else
-                        span 評定はまだ始まりませ
+                        form(method='post')
+                            input#exam_start(type='submit' name='exam_start' value='三ヶ月の行動基準評定を開始')
 
 
             div.exam_table
                 hr
                 mixin tab(fre, display0, display1, display_tab)
-                    form(method='post' id='form_'+fre style="display:" +display_tab)
-                        table(id='table_'+fre class='table_'+fre)
+                    form(method='post' id='form_' + fre style="display:" + display_tab)
+                        table(id='table_' + fre class='table_' + fre)
                             tr
                                 th(colspan='2') 項目
                                 th 定義
                                 th 望ましい行動例
-                                th='本人'+fre+'回'
+                                th='本人' + fre + '回'
                                 th 先生評価
 
                             mixin slt(note)
-                                td(style="display:" +display0)
-                                    select(name='student_'+note class='validate[required]')
+                                td(style="display:" + display0)
+                                    select(name='student_' + note class='validate[required]')
                                         option
                                         option(value='◯') ◯
                                         option(value='❌') ❌
-                                td(style="display:" +display1)
+                                td(style="display:" + display1)
                                     if info == null
                                         p
                                     else
-                                        p(id='student_'+fre+'_'+note)= info['frequency_'+fre]['student_'+note]
+                                        p(id='student_' + fre + '_' + note)= info['frequency_' + fre]['student_' + note]
                                 td
                                     p
 
@@ -216,30 +199,30 @@ html
                             tr
                                 td 新しいことに取り組むときには、手順や必要なことを洗い出している
                                 +slt('11_2')
-                        p(style='text-align: right' class='table_'+fre)
+                        p(style='text-align: right' class='table_' + fre)
                             //label 合計点
                             //input(type='text' name='exam_point')
                             //label サイン
                             //input(type='text' name='exam_sign')
-                            input(type='submit' id='fre_'+fre name='fre_'+fre value='送信' style="display:" +display0)
+                            input(type='submit' id='fre_' + fre name='fre_' + fre value='送信' style="display:" + display0)
 
-                if info==null
+                if info == null
                     //評定が始まりませ
                     +tab('1', 'none', 'table-cell', 'inline-table')
                 else
                     //評定１回
-                    if info.frequency_1.info==false
+                    if info.frequency_1.info == false
                         +tab('1', 'table-cell', 'none', 'inline-table')
                     else
                         //評定２回
-                        if info.frequency_2.info==false
+                        if info.frequency_2.info == false
                             +tab('1', 'none', 'table-cell', 'none')
                             +tab('2', 'table-cell', 'none', 'inline-table')
                         else
                             +tab('1', 'none', 'table-cell', 'none')
                             +tab('2', 'none', 'table-cell', 'none')
                             //評定３回
-                            if info.frequency_3.info==false
+                            if info.frequency_3.info == false
                                 +tab('3', 'table-cell', 'none', 'inline-table')
                             else
                                 +tab('3', 'none', 'table-cell', 'inline-table')

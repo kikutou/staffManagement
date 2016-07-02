@@ -80,107 +80,64 @@ router.post('/', function (req, res) {
                 res.redirect('/admin')
             }else{
                 var col_exam = db.collection('exam');
-                //評定が始めるとき、ユーザの評定クラクションを作ります
-                if (req.body.exam_start){
-                    var new_col = {};
-                    new_col['user_id'] = req.session.user._id;
-                    new_col['frequency_1'] = {date: '', info: false};
-                    new_col['frequency_2'] = {date: '', info: false};
-                    new_col['frequency_3'] = {date: '', info: false};
 
-                    col_exam.insert(new_col, function (err) {
-                        if (err){
-                            throw err
-                        }else {
-                            //もし評定が始める日は当月の２０日以後なら、評定は来月に始めるになります
-                            if (day<20){
-                                col_exam.update(
-                                    {user_id: req.session.user._id},
-                                    {$set:
-                                        {
-                                            "frequency_1.date": datestr_1,
-                                            "frequency_2.date": datestr_2,
-                                            "frequency_3.date": datestr_3
-                                        }
-                                    }, function () {
+                var exam = req.body;
+                col_exam.find({user_id: req.session.user._id}).toArray(function (err, doc) {
+                    console.log(doc);
+                    if (err){
+                        throw err
+                    }else {
+                        if (exam.fre_1){
+                            //評定１回
+                            exam['date'] = doc[0].frequency_1.date;
+                            exam['info'] = true;
+                            col_exam.update(
+                                {user_id: req.session.user._id},
+                                {$set: {frequency_1: exam}},
+                                {upsert: true},
+                                function (err, result) {
+                                    if (err){
+                                        throw err
+                                    }else {
                                         res.redirect('/work_exam')
                                     }
-                                )
-                            }else {
-                                col_exam.update(
-                                    {user_id: req.session.user._id},
-                                    {$set:
-                                    {
-                                        "frequency_1.date": datestr_2,
-                                        "frequency_2.date": datestr_3,
-                                        "frequency_3.date": datestr_4
-                                    }
-                                    }, function () {
+                                }
+                            )
+                        }else if (exam.fre_2) {
+                            //評定２回
+                            exam['date'] = doc[0].frequency_2.date;
+                            exam['info'] = true;
+                            col_exam.update(
+                                {user_id: req.session.user._id},
+                                {$set: {frequency_2: exam}},
+                                {upsert: true},
+                                function (err, result) {
+                                    if (err) {
+                                        throw err
+                                    } else {
                                         res.redirect('/work_exam')
                                     }
-                                )
-                            }
-                        }
-                    })
-                }else {
-                    var exam = req.body;
-                    col_exam.find({user_id: req.session.user._id}).toArray(function (err, doc) {
-                        console.log(doc);
-                        if (err){
-                            throw err
+                                }
+                            )
                         }else {
-                            if (exam.fre_1){
-                                //評定１回
-                                exam['date'] = doc[0].frequency_1.date;
-                                exam['info'] = true;
-                                col_exam.update(
-                                    {user_id: req.session.user._id},
-                                    {$set: {frequency_1: exam}},
-                                    {upsert: true},
-                                    function (err, result) {
-                                        if (err){
-                                            throw err
-                                        }else {
-                                            res.redirect('/work_exam')
-                                        }
+                            //評定３回
+                            exam['date'] = doc[0].frequency_3.date;
+                            exam['info'] = true;
+                            col_exam.update(
+                                {user_id: req.session.user._id},
+                                {$set: {frequency_3: exam}},
+                                {upsert: true},
+                                function (err, result) {
+                                    if (err){
+                                        throw err
+                                    }else {
+                                        res.redirect('/work_exam')
                                     }
-                                )
-                            }else if (exam.fre_2) {
-                                //評定２回
-                                exam['date'] = doc[0].frequency_2.date;
-                                exam['info'] = true;
-                                col_exam.update(
-                                    {user_id: req.session.user._id},
-                                    {$set: {frequency_2: exam}},
-                                    {upsert: true},
-                                    function (err, result) {
-                                        if (err) {
-                                            throw err
-                                        } else {
-                                            res.redirect('/work_exam')
-                                        }
-                                    }
-                                )
-                            }else {
-                                //評定３回
-                                exam['date'] = doc[0].frequency_3.date;
-                                exam['info'] = true;
-                                col_exam.update(
-                                    {user_id: req.session.user._id},
-                                    {$set: {frequency_3: exam}},
-                                    {upsert: true},
-                                    function (err, result) {
-                                        if (err){
-                                            throw err
-                                        }else {
-                                            res.redirect('/work_exam')
-                                        }
-                                    }
-                                )
-                            }
+                                }
+                            )
                         }
-                    })
-                }
+                    }
+                })
             }
         })
     }
