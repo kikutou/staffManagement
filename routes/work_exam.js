@@ -10,20 +10,6 @@ var year = now.getFullYear();
 var month = now.getMonth();
 var day = now.getDate();
 
-var second_month = new Date();
-second_month.setMonth(second_month.getMonth() + 1);
-
-var third_month = new Date();
-third_month.setMonth(third_month.getMonth() + 2);
-
-var fourth_month = new Date();
-fourth_month.setMonth(fourth_month.getMonth() + 3);
-
-var datestr_1 = now.toISOString().substring(0, 7);
-var datestr_2 = second_month.toISOString().substring(0, 7);
-var datestr_3 = third_month.toISOString().substring(0, 7);
-var datestr_4 = fourth_month.toISOString().substring(0, 7);
-
 /* GET users listing. */
 router.get('/', function(req, res) {
     //DBの設定

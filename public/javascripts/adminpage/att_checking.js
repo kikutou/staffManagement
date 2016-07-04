@@ -12,4 +12,21 @@ $(function () {
 
         $("#date_"+ i).html(nowday);
     }
+
+    $("#time_button_1").click(function () {
+        $("#time_input_1").show();
+        $("#time_submit_1").show();
+        $("#time_button_1").hide();
+        $("#time_text_1").hide()
+    });
+
+    $("#time_button_2").click(function () {
+        $("#time_input_2").show();
+        $("#time_submit_2").show();
+        $("#time_button_2").hide();
+        $("#time_text_2").hide()
+    });
+
+    $("#time_form_1").validationEngine();
+    $("#time_form_2").validationEngine();
 });

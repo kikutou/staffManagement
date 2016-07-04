@@ -43,7 +43,7 @@ html
                     if info!=null
                         span 評定時間：　#{info.frequency_1.date}～#{info.frequency_3.date}
                     else
-                        span 評定はまだ始まりませ
+                        span 評定はまだ始まりません
 
 
             div.exam_table
@@ -70,7 +70,10 @@ html
                                     else
                                         p(id='student_'+fre+'_'+note)= info['frequency_'+fre]['student_'+note]
                                 td
-                                    p
+                                    if info == null
+                                        p
+                                    else
+                                        p= info['frequency_'+fre]['teacher_'+note]
 
                             tr
                                 td 1
@@ -219,8 +222,6 @@ html
                         p(style='text-align: right' class='table_'+fre)
                             //label 合計点
                             //input(type='text' name='exam_point')
-                            //label サイン
-                            //input(type='text' name='exam_sign')
                             input(type='submit' id='fre_'+fre name='fre_'+fre value='送信' style="display:" +display0)
 
                 if info==null

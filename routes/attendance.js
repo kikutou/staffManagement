@@ -5,6 +5,7 @@ require('date-utils');
 var async = require('async');
 var express = require('express');
 var router = express.Router();
+var ObjectId = require('mongodb').ObjectID;
 
 /**
  * 社員の出勤退勤ボタン、及び過去１週間の出退勤状況リストを表示する
@@ -54,6 +55,27 @@ router.get('/', function(req, res) {
                                     // console.log(the_day.toFormat("YYYY-MM-DD"));
                                     console.log(item);
                                     info[i] = item;
+
+                                    var col_user = db.collection('users');
+
+                                    col_user.findOne({"_id" : ObjectId(req.session.user._id)}, function (err, doc) {
+                                        if (err){
+                                            throw err
+                                        }else {
+                                            //Time compare
+                                            var setted_entrance_time = doc.entrance_time;
+                                            var setted_leave_time = doc.leave_time;
+                                            if (item != null){
+                                                info[i]['late'] = ((setted_entrance_time < item.entrance_time) || !item.entrance_time);
+                                                info[i]['early'] = ((setted_leave_time > item.leave_time) || !item.leave_time);
+                                            }else {
+                                                info[i]['late'] = true;
+                                                info[i]['early'] = true;
+
+                                            }
+                                        }
+                                    });
+
                                     if (info[i] == null){
                                         info[i] = {date_id: i};
                                     }else {

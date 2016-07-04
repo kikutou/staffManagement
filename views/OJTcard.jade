@@ -91,4 +91,10 @@ html
                     div.study_block
                         label.study_label 先生評価
                     div.study_block
-                        p 内容なし
+                        if week1 == null
+                            p 内容なし
+                        else
+                            if week1.teacher
+                                p= week1.teacher
+                            else
+                                p 内容なし

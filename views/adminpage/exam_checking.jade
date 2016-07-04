@@ -8,6 +8,13 @@ html
         //Import jQuery
         include ../jQuery_import.jade
         //Import script & css
+        style(type='text/css').
+            table{border-collapse: collapse;}
+            table, th, td{border: 1px solid #000000;}
+            td{text-align: center;}
+            select, option{height: 40px;}
+        link(rel='styleSheet' type='text/css' href='/stylesheets/exam.css')
+        script(type='text/javascript' src='/javascripts/adminpage/exam_checking.js')
     body
         include ../top.jade
 
@@ -15,23 +22,30 @@ html
             div(style='text-align: center')
                 h1 【行 動 基 準 評 定】
             div
-                button#chose1 １回
-                button#chose2 ２回
-                button#chose3 ３回
+                if info['data'] == null
+                    button#chose1(disabled=true) １回
+                    button#chose2(disabled=true) ２回
+                    button#chose3(disabled=true) ３回
+                else
+                    button#chose1 １回
+                    button#chose2 ２回
+                    button#chose3 ３回
 
             div
-                div.exam_label="社員名前："+info.user_name
+                div.exam_label="社員名前："+info.staff_name
                 div.exam_start
                     if info['data'] != null
                         span 評定時間：　#{info.data.frequency_1.date}～#{info.data.frequency_3.date}
                     else
                         form(method='post')
+                            input(hidden type='text' name='staff_id' value=info.staff_id)
+                            input(hidden type='text' name='staff_name' value=info.staff_name)
                             input#exam_start(type='submit' name='exam_start' value='三ヶ月の行動基準評定を開始')
 
 
             div.exam_table
                 hr
-                mixin tab(fre, display0, display1, display_tab)
+                mixin tab(fre, display_tab)
                     form(method='post' id='form_' + fre style="display:" + display_tab)
                         table(id='table_' + fre class='table_' + fre)
                             tr
@@ -42,18 +56,62 @@ html
                                 th 先生評価
 
                             mixin slt(note)
-                                td(style="display:" + display0)
-                                    select(name='student_' + note class='validate[required]')
-                                        option
-                                        option(value='◯') ◯
-                                        option(value='❌') ❌
-                                td(style="display:" + display1)
-                                    if info == null
-                                        p
+                                td(hidden class='slt_slt_'+ fre)
+                                    if info['data'] == null
+                                        select(id='student_slt_' + note name='student_' + note)
+                                            option
+                                            option(value='◯') ◯
+                                            option(value='❌') ❌
                                     else
-                                        p(id='student_' + fre + '_' + note)= info['frequency_' + fre]['student_' + note]
-                                td
-                                    p
+                                        -var selected = info['data']['frequency_' + fre]['student_' + note]
+                                        if selected == '◯'
+                                            select(id='student_slt_'+ note name='student_'+ note)
+                                                option
+                                                option(value='◯' selected) ◯
+                                                option(value='❌') ❌
+                                        else if selected == '❌'
+                                            select(id='student_slt_' + note name='student_' + note)
+                                                option
+                                                option(value='◯') ◯
+                                                option(value='❌' selected) ❌
+                                        else
+                                            select(id='student_slt_' + note name='student_' + note)
+                                                option
+                                                option(value='◯') ◯
+                                                option(value='❌') ❌
+                                td(class='slt_view_'+ fre)
+                                    if info['data'] == null
+                                        p(id='student_' + fre + '_' + note)
+                                    else
+                                        p(id='student_' + fre + '_' + note)= info['data']['frequency_' + fre]['student_' + note]
+                                td(hidden class='slt_slt_'+ fre)
+                                    if info['data'] == null
+                                        select(id='teacher_slt_' + note name='teacher_' + note)
+                                            option
+                                            option(value='◯') ◯
+                                            option(value='❌') ❌
+                                    else
+                                        -var selected = info['data']['frequency_' + fre]['teacher_' + note]
+                                        if selected == '◯'
+                                            select(id='teacher_slt_' + note name='teacher_' + note)
+                                                option
+                                                option(value='◯' selected) ◯
+                                                option(value='❌') ❌
+                                        else if selected == '❌'
+                                            select(id='teacher_slt_' + note name='teacher_' + note)
+                                                option
+                                                option(value='◯') ◯
+                                                option(value='❌' selected) ❌
+                                        else
+                                            select(id='teacher_slt_' + note name='teacher_' + note)
+                                                option
+                                                option(value='◯') ◯
+                                                option(value='❌') ❌
+                                td(class='slt_view_'+ fre)
+                                    if info['data'] == null
+                                        p(id='teacher_' + fre + '_' + note)
+                                    else
+                                        p(id='teacher_' + fre + '_' + note)= info['data']['frequency_' + fre]['teacher_' + note]
 
                             tr
                                 td 1
@@ -202,27 +260,17 @@ html
                         p(style='text-align: right' class='table_' + fre)
                             //label 合計点
                             //input(type='text' name='exam_point')
-                            //label サイン
-                            //input(type='text' name='exam_sign')
-                            input(type='submit' id='fre_' + fre name='fre_' + fre value='送信' style="display:" + display0)
-
-                if info == null
-                    //評定が始まりませ
-                    +tab('1', 'none', 'table-cell', 'inline-table')
-                else
-                    //評定１回
-                    if info.frequency_1.info == false
-                        +tab('1', 'table-cell', 'none', 'inline-table')
-                    else
-                        //評定２回
-                        if info.frequency_2.info == false
-                            +tab('1', 'none', 'table-cell', 'none')
-                            +tab('2', 'table-cell', 'none', 'inline-table')
-                        else
-                            +tab('1', 'none', 'table-cell', 'none')
-                            +tab('2', 'none', 'table-cell', 'none')
-                            //評定３回
-                            if info.frequency_3.info == false
-                                +tab('3', 'table-cell', 'none', 'inline-table')
+                            input(hidden name='staff_id' type='text' value=info.staff_id)
+                            input(hidden name='staff_name' type='text' value=info.staff_name)
+                            if info['data'] == null
+                                button(id='modify_' + fre type='button' disabled=true) 評定
                             else
-                                +tab('3', 'none', 'table-cell', 'inline-table')
+                                if info['data']['frequency_'+ fre]['info'] == false
+                                    p 学員はまだ自己評価がしていません
+                                else
+                                    button(id='modify_' + fre type='button') 評定
+                            input(type='submit' id='fre_' + fre name='fre_' + fre value='送信' style="display:" + display0 hidden)
+
+                +tab('1', 'inline-table')
+                +tab('2', 'none')
+                +tab('3', 'none')

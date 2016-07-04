@@ -62,9 +62,12 @@ html
                             th(id='date_#{day.date_id}' rowspan='2').att_date
                             th.att_label 入室時間
                             if day
-                                td.att_time #{day.entrance_time}
+                                if day.late == false
+                                    td.att_time #{day.entrance_time}
+                                else
+                                    td(style='background-color: red').att_time #{day.entrance_time}
                             else
-                                td.att_time
+                                td(style='background-color: red').att_time
                             th.att_label 遅刻原因
                             if day
                                 td #{day.late_reason}
@@ -73,9 +76,12 @@ html
                         tr
                             th.att_label 退室時間
                             if day
-                                td.att_time #{day.leave_time}
+                                if day.early == false
+                                    td.att_time #{day.leave_time}
+                                else
+                                    td(style='background-color: red').att_time #{day.leave_time}
                             else
-                                td.att_time
+                                td(style='background-color: red').att_time
                             th.att_label 早退原因
                             if day
                                 td #{day.early_leave_reason}

@@ -5,8 +5,12 @@ require('date-utils');
 var async = require('async');
 var express = require('express');
 var router = express.Router();
+var ObjectId = require('mongodb').ObjectID;
 
 var now = new Date();
+var year = now.getFullYear();
+var month = now.getMonth();
+var day = now.getDate();
 //get datestr by format(yy-mm-dd)
 var datestr = now.toISOString().substring(0, 10);
 //get week
@@ -35,7 +39,7 @@ switch (week)
         var today = 'Sun'
 }
 
-var ObjectId = require('mongodb').ObjectID;
+
 
 router.get('/', function (req, res) {
     //DBの設定
@@ -82,6 +86,14 @@ router.get('/exam_checking', function (req, res) {
     res.redirect('/admin')
 });
 
+router.get('/ojt_checking', function (req, res) {
+    res.redirect('/admin')
+});
+
+router.get('/opinion_view', function (req, res) {
+    res.redirect('/admin')
+});
+
 
 router.post('/', function (req, res) {
     if (req.body.logout){
@@ -108,17 +120,19 @@ router.post('/att_checking', function (req, res) {
             console.log('user logout');
             res.redirect('/login')
         })
-    }else if (req.body.admin){
+    }else if (req.body.admin || req.body.back){
         res.redirect('/admin')
     }else {
         db.open(function (err, db) {
             if (err){
                 throw err
             }else {
+
                 var info = {};
                 var id = req.body.staff_id;
                 var name = req.body.staff_name;
                 var col_attendance = db.collection('attendance');
+                var col_user = db.collection('users');
 
                 info['user_id'] = id;
                 info['user_name'] = name;
@@ -126,42 +140,227 @@ router.post('/att_checking', function (req, res) {
 
                 var a = [0,1,2,3,4,5,6,7,8,9];
 
-                async.eachSeries(
-                    a,
-                    function (i, callback) {
-                        var the_day = new Date();
-                        the_day.setDate(now.getDate() - i);
+                if (req.body.entrance_time_set){
+                    col_user.update(
+                        {"_id" : ObjectId(req.body.staff_id)},
+                        {$set: {"entrance_time": req.body.entrance_time_set}},
+                        {upsert: false},
+                        function (err, result) {
+                            if (err){
+                                throw err
+                            }else {
+                                async.eachSeries(
+                                    a,
+                                    function (i, callback) {
+                                        var the_day = new Date();
+                                        the_day.setDate(now.getDate() - i);
 
-                        col_attendance.findOne(
-                            {user_id: id, date: the_day.toFormat("YYYY-MM-DD")},
-                            function (err, item) {
-                                if (err){
-                                    throw err;
-                                }else {
-                                    console.log(item);
-                                    info['att_data'][i] = item;
-                                    if (info['att_data'][i] == null){
-                                        info['att_data'][i] = {date_id: i};
-                                    }else {
-                                        info['att_data'][i].date_id = i
+                                        col_attendance.findOne(
+                                            {user_id: id, date: the_day.toFormat("YYYY-MM-DD")},
+                                            function (err, item) {
+                                                if (err){
+                                                    throw err;
+                                                }else {
+                                                    // console.log(item);
+                                                    info['att_data'][i] = item;
+
+                                                    var col_user = db.collection('users');
+
+                                                    col_user.findOne({"_id" : ObjectId(id)}, function (err, doc) {
+                                                        if (err){
+                                                            throw err
+                                                        }else {
+                                                            //Time compare
+                                                            var setted_entrance_time = doc.entrance_time;
+                                                            var setted_leave_time = doc.leave_time;
+                                                            if (item != null){
+                                                                info['att_data'][i]['late'] = ((setted_entrance_time < item.entrance_time) || !item.entrance_time);
+                                                                info['att_data'][i]['early'] = ((setted_leave_time > item.leave_time) || !item.leave_time);
+                                                            }else {
+                                                                info['att_data'][i]['late'] = true;
+                                                                info['att_data'][i]['early'] = true;
+                                                            }
+                                                        }
+                                                    });
+
+                                                    if (info['att_data'][i] == null){
+                                                        info['att_data'][i] = {date_id: i};
+                                                    }else {
+                                                        info['att_data'][i].date_id = i
+                                                    }
+                                                    callback();
+                                                }
+                                            }
+                                        )
+                                    }, function (err, result) {
+                                        if (err){
+                                            throw err
+                                        }else {
+                                            col_user.findOne({"_id" : ObjectId(req.body.staff_id)},
+                                                function (err, doc) {
+                                                    if (err){
+                                                        throw err
+                                                    }else {
+                                                        console.log(doc);
+                                                        info['entrance_time_set'] = doc.entrance_time;
+                                                        info['leave_time_set'] = doc.leave_time;
+
+                                                        console.log(info);
+
+                                                        res.render('adminpage/att_checking', {info: info});
+                                                    }
+                                                }
+                                            )
+                                        }
                                     }
-                                    callback();
-                                }
+                                )
                             }
-                        );
-                    },
-                    function(error, results) {
-                        if (error) {
-                            console.log(error);
                         }
+                    )
+                }else if (req.body.leave_time_set){
+                    col_user.update(
+                        {"_id" : ObjectId(req.body.staff_id)},
+                        {$set: {"leave_time": req.body.leave_time_set}},
+                        {upsert: false},
+                        function (err, result) {
+                            if (err){
+                                throw err
+                            }else {
+                                async.eachSeries(
+                                    a,
+                                    function (i, callback) {
+                                        var the_day = new Date();
+                                        the_day.setDate(now.getDate() - i);
 
-                        console.log(info);
+                                        col_attendance.findOne(
+                                            {user_id: id, date: the_day.toFormat("YYYY-MM-DD")},
+                                            function (err, item) {
+                                                if (err){
+                                                    throw err;
+                                                }else {
+                                                    // console.log(item);
+                                                    info['att_data'][i] = item;
 
-                        res.render('adminpage/att_checking', {info:info});
-                    }
-                );
+                                                    var col_user = db.collection('users');
+
+                                                    col_user.findOne({"_id" : ObjectId(id)}, function (err, doc) {
+                                                        if (err){
+                                                            throw err
+                                                        }else {
+                                                            //Time compare
+                                                            var setted_entrance_time = doc.entrance_time;
+                                                            var setted_leave_time = doc.leave_time;
+                                                            if (item != null){
+                                                                info['att_data'][i]['late'] = ((setted_entrance_time < item.entrance_time) || !item.entrance_time);
+                                                                info['att_data'][i]['early'] = ((setted_leave_time > item.leave_time) || !item.leave_time);
+                                                            }else {
+                                                                info['att_data'][i]['late'] = true;
+                                                                info['att_data'][i]['early'] = true;
+                                                            }
+                                                        }
+                                                    });
+
+                                                    if (info['att_data'][i] == null){
+                                                        info['att_data'][i] = {date_id: i};
+                                                    }else {
+                                                        info['att_data'][i].date_id = i
+                                                    }
+                                                    callback();
+                                                }
+                                            }
+                                        );
+                                    }, function (err, result) {
+                                        if (err){
+                                            throw err
+                                        }else {
+                                            col_user.findOne({"_id" : ObjectId(req.body.staff_id)},
+                                                function (err, doc) {
+                                                    if (err){
+                                                        throw err
+                                                    }else {
+                                                        info['entrance_time_set'] = doc.entrance_time;
+                                                        info['leave_time_set'] = doc.leave_time;
+
+                                                        console.log(info);
+
+                                                        res.render('adminpage/att_checking', {info: info});
+                                                    }
+                                                }
+                                            )
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    )
+                }else {
+                    async.eachSeries(
+                        a,
+                        function (i, callback) {
+                            var the_day = new Date();
+                            the_day.setDate(now.getDate() - i);
+
+                            col_attendance.findOne(
+                                {user_id: id, date: the_day.toFormat("YYYY-MM-DD")},
+                                function (err, item) {
+                                    if (err){
+                                        throw err;
+                                    }else {
+                                        // console.log(item);
+                                        info['att_data'][i] = item;
+
+                                        var col_user = db.collection('users');
+
+                                        col_user.findOne({"_id" : ObjectId(id)}, function (err, doc) {
+                                            if (err){
+                                                throw err
+                                            }else {
+                                                //Time compare
+                                                var setted_entrance_time = doc.entrance_time;
+                                                var setted_leave_time = doc.leave_time;
+                                                if (item != null){
+                                                    info['att_data'][i]['late'] = ((setted_entrance_time < item.entrance_time) || !item.entrance_time);
+                                                    info['att_data'][i]['early'] = ((setted_leave_time > item.leave_time) || !item.leave_time);
+                                                }else {
+                                                    info['att_data'][i]['late'] = true;
+                                                    info['att_data'][i]['early'] = true;
+                                                }
+                                            }
+                                        });
+
+                                        if (info['att_data'][i] == null){
+                                            info['att_data'][i] = {date_id: i};
+                                        }else {
+                                            info['att_data'][i].date_id = i
+                                        }
+                                        callback();
+                                    }
+                                }
+                            )
+                        },function (err, result) {
+                            if (err){
+                                throw err
+                            }else {
+                                col_user.findOne({"_id" : ObjectId(req.body.staff_id)},
+                                    function (err, doc) {
+                                        if (err){
+                                            throw err
+                                        }else {
+                                            info['entrance_time_set'] = doc.entrance_time;
+                                            info['leave_time_set'] = doc.leave_time;
+
+                                            console.log(info);
+
+                                            res.render('adminpage/att_checking', {info: info});
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    )
+                }
             }
-        });
+        })
     }
 });
 
@@ -251,7 +450,8 @@ router.post('/exam_checking', function (req, res) {
                 //評定が始めるとき、ユーザの評定クラクションを作ります
                 if (req.body.exam_start){
                     var new_col = {};
-                    new_col['user_id'] = req.session.user._id;
+                    new_col['user_id'] = req.body.staff_id;
+                    new_col['user_name'] = req.body.staff_name;
                     new_col['frequency_1'] = {date: '', info: false};
                     new_col['frequency_2'] = {date: '', info: false};
                     new_col['frequency_3'] = {date: '', info: false};
@@ -262,10 +462,24 @@ router.post('/exam_checking', function (req, res) {
                         if (err){
                             throw err
                         }else {
+                            //評定は月を単位になります
+                            var second_month = new Date();
+                            second_month.setMonth(second_month.getMonth() + 1);
+
+                            var third_month = new Date();
+                            third_month.setMonth(third_month.getMonth() + 2);
+
+                            var fourth_month = new Date();
+                            fourth_month.setMonth(fourth_month.getMonth() + 3);
+
+                            var datestr_1 = now.toISOString().substring(0, 7);
+                            var datestr_2 = second_month.toISOString().substring(0, 7);
+                            var datestr_3 = third_month.toISOString().substring(0, 7);
+                            var datestr_4 = fourth_month.toISOString().substring(0, 7);
                             //もし評定が始める日は当月の２０日以後なら、評定は来月に始めるになります
                             if (day<20){
                                 col_exam.update(
-                                    {user_id: req.session.user._id},
+                                    {user_id: req.body.staff_id},
                                     {$set:
                                     {
                                         "frequency_1.date": datestr_1,
@@ -273,12 +487,24 @@ router.post('/exam_checking', function (req, res) {
                                         "frequency_3.date": datestr_3
                                     }
                                     }, function () {
-                                        res.redirect('/work_exam')
+                                        var info = {};
+                                        info['staff_id'] = req.body.staff_id;
+                                        info['staff_name'] = req.body.staff_name;
+
+                                        col_exam.find({user_id: req.body.staff_id}).toArray(function (err, doc) {
+                                            if (err){
+                                                throw err
+                                            }else {
+                                                info['data'] = doc[0];
+                                                console.log(info);
+                                                res.render('adminpage/exam_checking', {info: info})
+                                            }
+                                        })
                                     }
                                 )
                             }else {
                                 col_exam.update(
-                                    {user_id: req.session.user._id},
+                                    {user_id: req.body.staff_id},
                                     {$set:
                                     {
                                         "frequency_1.date": datestr_2,
@@ -286,7 +512,19 @@ router.post('/exam_checking', function (req, res) {
                                         "frequency_3.date": datestr_4
                                     }
                                     }, function () {
-                                        res.redirect('/work_exam')
+                                        var info = {};
+                                        info['staff_id'] = req.body.staff_id;
+                                        info['staff_name'] = req.body.staff_name;
+
+                                        col_exam.find({user_id: req.body.staff_id}).toArray(function (err, doc) {
+                                            if (err){
+                                                throw err
+                                            }else {
+                                                info['data'] = doc[0];
+                                                console.log(info);
+                                                res.render('adminpage/exam_checking', {info: info})
+                                            }
+                                        })
                                     }
                                 )
                             }
@@ -294,20 +532,116 @@ router.post('/exam_checking', function (req, res) {
                     })
                 }else {
                     var col_exam = db.collection('exam');
+                    var exam_data = req.body;
 
                     var info = {};
-                    info['user_name'] = req.body.staff_name;
-                    info['data'] = {};
+                    info['staff_id'] = req.body.staff_id;
+                    info['staff_name'] = req.body.staff_name;
 
-                    col_exam.find({"user_id": req.body.staff_id}).toArray(function (err, item) {
-                        if (err){
-                            throw err
-                        }else {
-                            info['data'] = item[0];
-                            console.log(info);
-                            res.render('adminpage/exam_checking', info)
-                        }
-                    })
+                    if (req.body.fre_1){
+
+                        col_exam.findOne({user_id: exam_data.staff_id}, function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                exam_data['date'] = doc.frequency_1.date;
+                                exam_data['info'] = doc.frequency_1.info;
+
+                                col_exam.update(
+                                    {"user_id": req.body.staff_id},
+                                    {$set: {frequency_1: exam_data}},
+                                    {upsert: true},
+                                    function (err, result) {
+                                        if (err){
+                                            throw err
+                                        }else {
+                                            col_exam.find({"user_id": req.body.staff_id}).toArray(function (err, item) {
+                                                if (err){
+                                                    throw err
+                                                }else {
+                                                    info['data'] = item[0];
+                                                    console.log(info);
+                                                    res.render('adminpage/exam_checking', {info: info})
+                                                }
+                                            })
+                                        }
+                                    }
+                                )
+                            }
+                        })
+                    }else if (req.body.fre_2){
+
+                        col_exam.findOne({user_id: exam_data.staff_id}, function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                exam_data['date'] = doc.frequency_2.date;
+                                exam_data['info'] = doc.frequency_2.info;
+
+                                col_exam.update(
+                                    {"user_id": req.body.staff_id},
+                                    {$set: {frequency_2: exam_data}},
+                                    {upsert: true},
+                                    function (err, result) {
+                                        if (err){
+                                            throw err
+                                        }else {
+                                            col_exam.find({"user_id": req.body.staff_id}).toArray(function (err, item) {
+                                                if (err){
+                                                    throw err
+                                                }else {
+                                                    info['data'] = item[0];
+                                                    console.log(info);
+                                                    res.render('adminpage/exam_checking', {info: info})
+                                                }
+                                            })
+                                        }
+                                    }
+                                )
+                            }
+                        })
+                    }else if (req.body.fre_3){
+
+                        col_exam.findOne({user_id: exam_data.staff_id}, function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                exam_data['date'] = doc.frequency_3.date;
+                                exam_data['info'] = doc.frequency_3.info;
+
+                                col_exam.update(
+                                    {"user_id": req.body.staff_id},
+                                    {$set: {frequency_3: exam_data}},
+                                    {upsert: true},
+                                    function (err, result) {
+                                        if (err){
+                                            throw err
+                                        }else {
+                                            col_exam.find({"user_id": req.body.staff_id}).toArray(function (err, item) {
+                                                if (err){
+                                                    throw err
+                                                }else {
+                                                    info['data'] = item[0];
+                                                    console.log(info);
+                                                    res.render('adminpage/exam_checking', {info: info})
+                                                }
+                                            })
+                                        }
+                                    }
+                                )
+                            }
+                        })
+                    }else {
+                        col_exam.find({"user_id": req.body.staff_id}).toArray(function (err, item) {
+                            if (err){
+                                throw err
+                            }else {
+                                info['data'] = item[0];
+                                console.log(info);
+                                res.render('adminpage/exam_checking', {info: info})
+                            }
+                        })
+                    }
                 }
             }
         })
