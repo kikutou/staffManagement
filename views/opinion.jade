@@ -13,23 +13,31 @@ html
     body
         include top.jade
         div.box
-            form(method='post')
-                ul
+            ul
+                form(method='post')
                     div
                         li 先生、先輩及び直接担当者に要望したいこと、改善してほしいこと
                             br
-                            textarea(placeholder='あなたの意見を書いてください' name='demand')
+                            textarea(name='demand')
+                            div
+                                br.opinion_submit
+                                input(type='submit' value='送信')
                             hr
+                form(method='post')
                     div
                         li 今後、２～３年間にあなたが担当したい職務内容、又は自己の進みたい方向など
                             br
-                            textarea(placeholder='あなたの希みを書いてください' name='take_on')
+                            textarea(name='take_on')
+                            div
+                                br.opinion_submit
+                                input(type='submit' value='送信')
                             hr
+                form(method='post')
                     div
                         li 会社に対する感想や意見や希望
                             br
-                            textarea(placeholder='あなたの感想を書いてください' name='opinion')
+                            textarea(name='opinion')
+                            div
+                                br.opinion_submit
+                                input(type='submit' value='送信')
                             hr
-                    div
-                        br.opinion_submit
-                        input(type='submit' value='送信')

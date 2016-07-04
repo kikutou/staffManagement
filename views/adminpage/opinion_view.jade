@@ -1,0 +1,51 @@
+//
+   Created by mamol on 16/07/04.
+doctype html
+html
+    head
+        title 社員意見
+        meta(charset='UTF-8')
+
+
+    body
+        include ../top.jade
+
+        form(method='post')
+            input(type='submit' name='view_all' value='全部')
+        form(method='post')
+            input(type='submit' name='view_demand' value='要望')
+        form(method='post')
+            input(type='submit' name='view_take_on' value='進みたい方向')
+        form(method='post')
+            input(type='submit' name='view_opinion' value='感想と意見')
+        table
+            tr
+                th 社員名前
+                th 提出時間
+                th 分類
+                th 内容
+            each data in info
+                tr
+                    if data
+                        td #{data.user_name}
+                    else
+                        td
+                    if data
+                        td #{data.date}
+                    else
+                        td
+                    if data
+                        td #{data.type}
+                    else
+                        td
+                    if data
+                        if data.demand
+                            td #{data.demand}
+                        else if data.take_on
+                            td #{data.take_on}
+                        else if data.opinion
+                            td #{data.opinion}
+                        else
+                            td
+                    else
+                        td

@@ -20,7 +20,7 @@ router.post('/', function (req, res) {
     if (req.body.logout){
         req.session.destroy(function () {
             console.log('user logout');
-            res.redirect('login')
+            res.redirect('/login')
         })
     }else if (req.body.admin){
         res.redirect('/admin')
@@ -35,7 +35,18 @@ router.post('/', function (req, res) {
             }else{
                 var opinion = req.body;
                 opinion['user_id'] = req.session.user._id;
+                opinion['user_name'] = req.session.user.staff_name;
                 opinion['date'] = datestr;
+
+                if (req.body.demand){
+                    opinion['type'] = "要望"
+                }else if (req.body.take_on){
+                    opinion['type'] = "進みたい方向"
+                }else if (req.body.opinion){
+                    opinion['type'] = "感想と意見"
+                }else {
+                    opinion['type'] = ""
+                }
 
                 var col_opinion = db.collection('opinion');
 

@@ -495,5 +495,73 @@ router.post('/ojt_checking', function (req, res) {
     }
 });
 
+//社員意見
+router.post('/opinion_view', function (req, res) {
+    console.log('post to staff_opinion');
+    //DBの設定
+    var mongodb = require('mongodb');
+    var server = new mongodb.Server('localhost', 27017);
+    var db = mongodb.Db('staffManagement', server, {safe: true});
+
+    if (req.body.logout){
+        req.session.destroy(function () {
+            console.log('user logout');
+            res.redirect('/login')
+        })
+    }else if (req.body.admin || req.body.back){
+        res.redirect('/admin')
+    }else {
+        db.open(function (err, db) {
+            if (err){
+                throw err
+            }else {
+                var col_opinion = db.collection('opinion');
+
+                if(req.body.view_all){
+                    col_opinion.find().toArray(function (err, doc) {
+                        if (err){
+                            throw err
+                        }else {
+                            res.render('adminpage/opinion_view', {info: doc})
+                        }
+                    })
+                }else if (req.body.view_demand){
+                    col_opinion.find({type: '要望'}).toArray(function (err, doc) {
+                        if (err){
+                            throw err
+                        }else {
+                            res.render('adminpage/opinion_view', {info: doc})
+                        }
+                    })
+                }else if (req.body.view_take_on){
+                    col_opinion.find({type: '進みたい方向'}).toArray(function (err, doc) {
+                        if (err){
+                            throw err
+                        }else {
+                            res.render('adminpage/opinion_view', {info: doc})
+                        }
+                    })
+                }else if (req.body.view_opinion){
+                    col_opinion.find({type: '感想と意見'}).toArray(function (err, doc) {
+                        if (err){
+                            throw err
+                        }else {
+                            res.render('adminpage/opinion_view', {info: doc})
+                        }
+                    })
+                }else {
+                    col_opinion.find({user_id: req.body.staff_id}).toArray(function (err, doc) {
+                        if (err){
+                            throw err
+                        }else {
+                            res.render('adminpage/opinion_view', {info: doc})
+                        }
+                    })
+                }
+            }
+        })
+    }
+});
+
 
 module.exports = router;
