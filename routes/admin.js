@@ -897,5 +897,4 @@ router.post('/opinion_view', function (req, res) {
     }
 });
 
-
 module.exports = router;

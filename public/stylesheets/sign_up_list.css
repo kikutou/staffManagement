@@ -18,3 +18,8 @@
     text-align: left;
     height: auto;
 }
+
+.list_back{
+    float: right;
+    margin-left: 90%;
+}

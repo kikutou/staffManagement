@@ -5,47 +5,55 @@ html
     head
         title 社員意見
         meta(charset='UTF-8')
-
+        //Import script & css
+        link(rel='stylesheet' type='text/css' href='/stylesheets/adminpage/view_opinion.css')
 
     body
         include ../top.jade
+        div.box
+            div(style='width: 100%')
+                div.view_button
+                    form(method='post')
+                        input(type='submit' name='view_all' value='全部')
+                div.view_button
+                    form(method='post')
+                        input(type='submit' name='view_demand' value='要望')
+                div.view_button
+                    form(method='post')
+                        input(type='submit' name='view_take_on' value='進みたい方向')
+                div.view_button
+                    form(method='post')
+                        input(type='submit' name='view_opinion' value='感想と意見')
 
-        form(method='post')
-            input(type='submit' name='view_all' value='全部')
-        form(method='post')
-            input(type='submit' name='view_demand' value='要望')
-        form(method='post')
-            input(type='submit' name='view_take_on' value='進みたい方向')
-        form(method='post')
-            input(type='submit' name='view_opinion' value='感想と意見')
-        table
-            tr
-                th 社員名前
-                th 提出時間
-                th 分類
-                th 内容
-            each data in info
-                tr
-                    if data
-                        td #{data.user_name}
-                    else
-                        td
-                    if data
-                        td #{data.date}
-                    else
-                        td
-                    if data
-                        td #{data.type}
-                    else
-                        td
-                    if data
-                        if data.demand
-                            td #{data.demand}
-                        else if data.take_on
-                            td #{data.take_on}
-                        else if data.opinion
-                            td #{data.opinion}
-                        else
-                            td
-                    else
-                        td
+            div.view_table
+                table(style='width: 100%')
+                    tr
+                        th.view_name 社員名前
+                        th.view_time 提出時間
+                        th.view_occupy 分類
+                        th.view_content 内容
+                    each data in info
+                        tr
+                            if data
+                                td.view_name #{data.user_name}
+                            else
+                                td.view_name
+                            if data
+                                td.view_time #{data.date}
+                            else
+                                td.view_time
+                            if data
+                                td.view_occupy #{data.type}
+                            else
+                                td.view_occupy
+                            if data
+                                if data.demand
+                                    td.view_content #{data.demand}
+                                else if data.take_on
+                                    td.view_content #{data.take_on}
+                                else if data.opinion
+                                    td.view_content #{data.opinion}
+                                else
+                                    td.view_content
+                            else
+                                td.view_content

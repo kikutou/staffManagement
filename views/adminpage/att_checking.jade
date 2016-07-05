@@ -10,43 +10,45 @@ html
         include ../jQuery_import.jade
         //Import script & css
         script(type='text/javascript' src='/javascripts/adminpage/att_checking.js')
+        link(rel='stylesheet' type='text/css' href='/stylesheets/adminpage/att_checking.css')
     body
         include ../top.jade
-        div
+        div.box
             div
-                //div
-                //    p #{info.user_id}
-                div
-                    p #{info.user_name}
-                    hr
+                div.att_username #{info.user_name}
+                div.att_back
+                    form(method='post')
+                        input(type='submit' name='back' value='戻 る' style='width: 200%')
+                br
+                hr
             div
-                div
+                div.time_box
                     if info.entrance_time_set
-                        p#time_text_1="入室時間："+ info.entrance_time_set
+                        span#time_text_1.time_set="入室時間："+ info.entrance_time_set
                     else
-                        p#time_text_1 入室時間：未設定
+                        span#time_text_1.time_set 入室時間：未設定
                     form#time_form_1(method='post')
                         input(hidden type='text' name='staff_id' value=info.user_id)
                         input(hidden type='text' name='staff_name' value=info.user_name)
-                        button#time_button_1(type='button') 設定
-                        input#time_input_1(hidden type='date' name='entrance_time_set' placeholder='入室時間')
-                        input#time_submit_1(hidden type='submit' value='確認')
-                        hr
-                div
+                        button.time_confirm#time_button_1(type='button') 設定
+                        input.time_set#time_input_1(hidden type='date' name='entrance_time_set' placeholder='入室時間')
+                        input.time_confirm#time_submit_1(hidden type='submit' value='確認')
+
+                div.time_box
                     if info.leave_time_set
-                        p#time_text_2="退室時間："+ info.leave_time_set
+                        span#time_text_2.time_set="退室時間："+ info.leave_time_set
                     else
-                        p#time_text_2 退室時間：未設定
+                        span#time_text_2.time_set 退室時間：未設定
                     form#time_form_2(method='post')
                         input(hidden type='text' name='staff_id' value=info.user_id)
                         input(hidden type='text' name='staff_name' value=info.user_name)
-                        button#time_button_2(type='button') 設定
-                        input#time_input_2(hidden type='date' name='leave_time_set' placeholder='退室時間')
-                        input#time_submit_2(hidden type='submit' value='確認')
-                        hr
+                        button.time_confirm#time_button_2(type='button') 設定
+                        input.time_set#time_input_2(hidden type='date' name='leave_time_set' placeholder='退室時間')
+                        input.time_confirm#time_submit_2(hidden type='submit' value='確認')
 
-            div
-                table
+            div.time_table
+                hr
+                table.att_table
                     each day in info['att_data']
                         tr
                             th(id='date_#{day.date_id}' rowspan='2').att_checking_date

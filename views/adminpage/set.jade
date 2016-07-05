@@ -13,6 +13,12 @@ html
     body
         include ../top.jade
         div.box
+            div
+                div(style='float: left') #{info.staff_name}
+                div
+                    form(method='post')
+                        input(type='submit' name='back' value='戻 る' style='width: 7%')
+                hr
 
             div#signup_confirm(align='center' style='margin-top: 3%')
                 div.sign_up_list
@@ -83,8 +89,6 @@ html
                 div.sign_up_list
                     div.list_text
                         button#staff_massage_confirm 修正
-                        form(method='post')
-                            input(type='submit' name='back' value='戻る')
 
             //input page
             div(align='center' style='marginTop: 3%')

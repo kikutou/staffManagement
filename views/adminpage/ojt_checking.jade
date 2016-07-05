@@ -18,7 +18,11 @@ html
             include ../top.jade
 
             div.box
-                div #{info.user_name}
+                div
+                    span.ojt_back #{info.user_name}
+                    span
+                        form(method='post')
+                            input(type='submit' name='back' value='戻 る' style='width: 8%')
                 mixin tab(tab_id)
                     hr
                     form(method='post')
@@ -77,7 +81,7 @@ html
                                         p(id='teacher'+ tab_id)= info['week'+ tab_id]['teacher']
                                     else
                                         p 内容なし
-                                    textarea(id='re_teacher'+ tab_id name='teacher'+ tab_id hidden)
+                                    textarea.study_teacher(id='re_teacher'+ tab_id name='teacher'+ tab_id hidden)
 
                         div.study_block
                             div.study_submit

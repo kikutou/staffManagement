@@ -50,3 +50,13 @@ td{
     width: 99%;
     height: 200px;
 }
+
+.study_teacher{
+    width: 100%;
+}
+
+.ojt_back{
+    width: 5%;
+    float: left;
+    margin-left: 1%;
+}

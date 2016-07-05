@@ -12,3 +12,9 @@
     float: left;
     width: 100%;
 }
+
+.exam_back{
+    width: 30%;
+    float: left;
+    margin-left: 1%;
+}

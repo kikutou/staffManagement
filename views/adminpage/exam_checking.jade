@@ -21,7 +21,7 @@ html
         div.box
             div(style='text-align: center')
                 h1 【行 動 基 準 評 定】
-            div
+            div(style='text-align: center')
                 if info['data'] == null
                     button#chose1(disabled=true) １回
                     button#chose2(disabled=true) ２回
@@ -33,6 +33,9 @@ html
 
             div
                 div.exam_label="社員名前："+info.staff_name
+                div.exam_back
+                    form(method='post')
+                        input(type='submit' name='back' value='戻 る' style='width: 20%')
                 div.exam_start
                     if info['data'] != null
                         span 評定時間：　#{info.data.frequency_1.date}～#{info.data.frequency_3.date}
