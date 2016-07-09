@@ -22,7 +22,7 @@ router.post('/', function (req, res) {
     if (req.body.logout){
         req.session.destroy(function () {
             console.log('user logout');
-            res.redirect('login')
+            res.redirect('/login')
         })
     }else if (req.body.admin){
         res.redirect('/admin')
