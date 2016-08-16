@@ -99,7 +99,7 @@ app.use(function(err, req, res, next) {
 
 
 app.listen(3000,function () {
-    console.log('begin to work;');
+    console.log('System running on localhost:3000');
 });
 
 module.exports = app;

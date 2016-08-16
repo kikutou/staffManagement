@@ -21,6 +21,7 @@ html
                         th 社員名前
                         th 社員区分
                         th(colspan='5') 社員情報設定＆一覧
+                        th 意見
                     mixin tab(user_name, user_email, user_occpation, button_id, text_id)
                         tr
                             td=user_name
@@ -35,6 +36,11 @@ html
                                     input(type='text' name='staff_id' value=text_id hidden)
                                     input(type='text' name='staff_name' value=user_name hidden)
                                     input(type='submit' value='出勤時間一覧')
+                            td
+                                form(method='post' action='/admin/study_checking')
+                                    input(type='text' name='staff_id' value=text_id hidden)
+                                    input(type='text' name='staff_name' value=user_name hidden)
+                                    input(type='submit' name='admin_study' value='学習内容一覧')
                             td
                                 form(method='post' action='/admin/exam_checking')
                                     input(type='text' name='staff_id' value=text_id hidden)

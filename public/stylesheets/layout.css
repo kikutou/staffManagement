@@ -22,7 +22,7 @@
 
 .top_attendance{
     position: relative;
-    width: 17.6%;
+    width: 14%;
     height: 100%;
     float: left;
     margin-left: 2%;
@@ -32,7 +32,7 @@
 }
 
 .top_text{
-    margin-top: 9%;
+    margin-top: 12%;
 }
 
 .logout{

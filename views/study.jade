@@ -10,36 +10,68 @@ html
         //DatePicker
         script(type='text/javascript' src='/javascripts/datepicker.js')
         //Import script & css
-        style.
-            table{border-collapse: collapse;}
-            table, th, td{border: 1px solid black;}
-            td{text-align: center;}
         link(rel='stylesheet' type='text/css' href='/stylesheets/study.css')
+        script(type='text/javascript' src='/javascripts/OJTcard.js')
 
     body
         include top.jade
-        include side_bar
 
         div.box
-            div.study_table
-                form(method='post')
-                    div
-                        table
+            form(method="post")
+                div.study_table
+                    table
+                        tr
+                            th 日期
+                            th 研修内容
+                            th 自己評価
+                            th 先生評価
+                        -var week_day = ['Mon', 'Tus', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        each day0, week in week_day
+                            -var day = week + 1
+                            -var info = week0[day0]
                             tr
-                                th 日期
-                                th 学習内容
-                                th 自己評価
-                            mixin tbdata(weeks)
-                                tr
-                                    td: input.study_date(type='date' name='study_date'+weeks)
-                                    td: textarea(name='study_content'+weeks)
-                                    td: textarea(name='self_evaluation'+weeks)
+                                td.study_date(id='ojt_day'+ day)
+                                td
+                                    input.study_text(type='text' id='re_content'+ day name='content'+ day hidden)
+                                    span.study_content(id='content'+ day) #{info.content}
+                                td
+                                    input.study_text(type='text' id='re_self_report'+ day name='self_report'+ day hidden)
+                                    span.study_content(id='self_report'+ day) #{info.self_report}
+                                td
+                                    span.study_content(id='teacher_report'+ day) #{info.teacher_report}
+                                td(hidden)
+                                    input(id='ojt_day_hidden' + day type='date' name='ojt_day' + day)
 
-                            -for (var i=1; i<8; i++)
-                                +tbdata(i)
-
-                    div.study_button
+                    div.study_block
                         div.study_submit
-                            input(type='submit' value='確認')
-                        div.study_modify
-                            input(type='button' value='修正')
+                            input(type='submit' value='送信' hidden=)#study_sub
+                        div.study_submit
+                            input(type='button' value='入力')#modify
+
+            div.study_table
+                hr
+                h3 先週内容
+                table
+                    tr
+                        th 日期
+                        th 研修内容
+                        th 自己評価
+                        th 先生評価
+
+                    -var week_day = ['Mon', 'Tus', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    each day1, week in week_day
+                        -var day = week + 1
+                        tr
+                            td(id='last_day' + day)
+                            if week1 != null
+                                -var info = week1[day1]
+                                td #{info.content}
+                                td #{info.self_report}
+                                td #{info.teacher_report}
+                            else
+                                td
+                                td
+                                td
+
+            div.study_table
+                br

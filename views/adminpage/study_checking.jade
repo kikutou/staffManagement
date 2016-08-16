@@ -31,12 +31,10 @@ html
                         div.study_table
                             table
                                 tr
-                                    th(rowspan='2' style='width: 10%') 日期
-                                    th(rowspan='2' style='width: 20%') 研修内容
-                                    th(colspan='2') 自己申告
-                                tr
+                                    th(style='width: 10%') 日期
+                                    th(style='width: 20%') 研修内容
                                     th 習得技術内容
-                                    th(style='width: 10%') 達成率
+                                    th(style='width: 10%') 先生評価
 
                                 -var week_day = ['Mon', 'Tus', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                                 each day, week_key in week_day
@@ -59,35 +57,13 @@ html
                                             else
                                                 span.study_content(id='self_report'+ tab_id + week)
                                         td
-                                            select.study_text(id='re_percent'+ tab_id + week name='percent'+ tab_id + week hidden)
-                                                option
-                                                option 100%
-                                                option 90%
-                                                option 80%
-                                                option 70%
-                                                option 60%
-                                                option 50%
-                                                option 40%
-                                                option 30%
-                                                option 20%
-                                                option 10%
-                                                option 未達成
+                                            input.study_text(type='text' id='re_percent'+ tab_id + week name='teacher_report'+ tab_id + week hidden)
                                             if info['week'+ tab_id] != null
-                                                span.study_content(id='percent'+ tab_id + week)= info['week'+ tab_id][day]['percent']
+                                                span.study_content(id='percent'+ tab_id + week)= info['week'+ tab_id][day]['teacher_report']
                                             else
                                                 span.study_content(id='percent'+ tab_id + week)
                                         td(hidden)
                                             input(id='ojt_day_hidden'+ tab_id + week type='date' name='ojt_day'+ tab_id + week)
-
-                        div.study_table
-                                div.study_block
-                                    label.study_label 先生評価
-                                div.study_block
-                                    if info['week'+ tab_id] != null
-                                        p(id='teacher'+ tab_id)= info['week'+ tab_id]['teacher']
-                                    else
-                                        p 内容なし
-                                    textarea.study_teacher(id='re_teacher'+ tab_id name='teacher'+ tab_id hidden)
 
                         div.study_block
                             div.study_submit

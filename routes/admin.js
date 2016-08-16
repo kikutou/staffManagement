@@ -82,6 +82,10 @@ router.get('/set', function (req, res) {
     res.redirect('/admin')
 });
 
+router.get('/study_checking', function (req, res) {
+    res.redirect('/admin')
+});
+
 router.get('/exam_checking', function (req, res) {
     res.redirect('/admin')
 });
@@ -422,6 +426,187 @@ router.post('/set', function (req, res) {
                         res.render('adminpage/set', {info: item[0]});
                     }
                 })
+            }
+        })
+    }
+});
+
+//学習内容
+router.post('/study_checking', function (req, res) {
+    console.log('post to exam_checking');
+    //DBの設定
+    var mongodb = require('mongodb');
+    var server = new mongodb.Server('localhost', 27017);
+    var db = mongodb.Db('staffManagement', server, {safe: true});
+
+    if (req.body.logout){
+        req.session.destroy(function () {
+            console.log('user logout');
+            res.redirect('/login')
+        })
+    }else if (req.body.admin || req.body.back){
+        res.redirect('/admin')
+    }else if (req.body.admin_study){
+        db.open(function (err, db) {
+            if (err){
+                throw err
+            }else {
+                var col_ojt = db.collection('study');
+
+                var info = {};
+                info['user_id'] = req.body.staff_id;
+                info['user_name'] = req.body.staff_name;
+                var a = [0, 1, 2, 3, 4];
+
+                async.eachSeries(
+                    a,
+                    function (i, callback) {
+                        var date_key = today + ".date";
+
+                        var the_day = new Date();
+                        the_day.setDate(now.getDate() - (7 * i));
+                        datestr = the_day.toISOString().substring(0, 10);
+
+                        var find_obj = {};
+                        find_obj['user_id'] = req.body.staff_id;
+                        find_obj[date_key] = datestr;
+                        console.log(find_obj);
+
+                        col_ojt.findOne(find_obj, function (err, item) {
+                            if (err){
+                                throw err
+                            }else {
+                                info['week'+i] = item;
+                                callback();
+                            }
+                        })
+                    },
+                    function (error, results) {
+                        if (error){
+                            throw error
+                        }else {
+                            console.log(info);
+
+                            res.render('adminpage/study_checking', {info: info})
+                        }
+                    }
+                )
+            }
+        })
+    }else {
+        var j;
+        if (req.body.ojt_admin_modify0){
+            j = 0;
+        }else if (req.body.ojt_admin_modify1){
+            j = 1;
+        }else if (req.body.ojt_admin_modify2){
+            j = 2;
+        }else if (req.body.ojt_admin_modify3){
+            j = 3;
+        }else if (req.body.ojt_admin_modify4){
+            j = 4;
+        }else {
+            console.log('DATA NOT FOUND')
+        }
+
+        db.open(function (err, db) {
+            if (err){
+                throw err
+            }else {
+                var col_ojt = db.collection('study');
+
+                var info = {};
+                info['user_id'] = req.body.user_id;
+                info['user_name'] = req.body.user_name;
+
+                var date_key = today + ".date";
+
+                var the_day = new Date();
+                the_day.setDate(now.getDate() - (7 * j));
+                datestr = the_day.toISOString().substring(0, 10);
+
+                var update_obj = {};
+                update_obj['user_id'] = req.body.user_id;
+                update_obj[date_key] = datestr;
+
+
+                var update_data = [];
+
+                var a = [0, 1, 2, 3, 4, 5, 6];
+                async.eachSeries(
+                    a,
+                    function (k, callback) {
+                        var l = k + 1;
+                        update_data[k] = {
+                            'date': req.body['hidden_ojt_day'+ j + l],
+                            'content': req.body['content'+ j + l],
+                            'self_report': req.body['self_report'+ j + l],
+                            'teacher_report': req.body['teacher_report'+ j + l]
+                        };
+                        callback()
+                    },
+                    function (error, result) {
+                        if (error){
+                            throw error
+                        }else {
+                            col_ojt.update(
+                                update_obj,
+                                {$set: {
+                                    'Mon': update_data[0],
+                                    'Tus': update_data[1],
+                                    'Wed': update_data[2],
+                                    'Thu': update_data[3],
+                                    'Fri': update_data[4],
+                                    'Sat': update_data[5],
+                                    'Sun': update_data[6]
+                                }},
+                                {
+                                    upsert: true,
+                                    multi: true
+                                },
+                                function (err, result) {
+                                    if (err){
+                                        throw err
+                                    }else {
+                                        var a = [0, 1, 2, 3, 4];
+
+                                        async.eachSeries(
+                                            a,
+                                            function (i, callback) {
+                                                var date_key = today + ".date";
+
+                                                var the_day = new Date();
+                                                the_day.setDate(now.getDate() - (7 * i));
+                                                datestr = the_day.toISOString().substring(0, 10);
+
+                                                var find_obj = {};
+                                                find_obj['user_id'] = req.body.user_id;
+                                                find_obj[date_key] = datestr;
+                                                col_ojt.findOne(find_obj, function (err, item) {
+                                                    if (err){
+                                                        throw err
+                                                    }else {
+                                                        info['week'+i] = item;
+                                                        callback();
+                                                    }
+                                                })
+                                            },
+                                            function (error, results) {
+                                                if (error){
+                                                    throw error
+                                                }else {
+                                                    console.log(info);
+
+                                                    res.render('adminpage/study_checking', {info: info})
+                                                }
+                                            }
+                                        )
+                                    }
+                                }
+                            )
+                        }
+                    }
+                );
             }
         })
     }
@@ -832,68 +1017,72 @@ router.post('/ojt_checking', function (req, res) {
 //社員意見
 router.post('/opinion_view', function (req, res) {
     console.log('post to staff_opinion');
-    //DBの設定
-    var mongodb = require('mongodb');
-    var server = new mongodb.Server('localhost', 27017);
-    var db = mongodb.Db('staffManagement', server, {safe: true});
-
-    if (req.body.logout){
-        req.session.destroy(function () {
-            console.log('user logout');
-            res.redirect('/login')
-        })
-    }else if (req.body.admin || req.body.back){
-        res.redirect('/admin')
+    if (req.session.user.staff_occupation != '社長'){
+        res.redirect('/admin');
     }else {
-        db.open(function (err, db) {
-            if (err){
-                throw err
-            }else {
-                var col_opinion = db.collection('opinion');
+        //DBの設定
+        var mongodb = require('mongodb');
+        var server = new mongodb.Server('localhost', 27017);
+        var db = mongodb.Db('staffManagement', server, {safe: true});
 
-                if(req.body.view_all){
-                    col_opinion.find().toArray(function (err, doc) {
-                        if (err){
-                            throw err
-                        }else {
-                            res.render('adminpage/opinion_view', {info: doc})
-                        }
-                    })
-                }else if (req.body.view_demand){
-                    col_opinion.find({type: '要望'}).toArray(function (err, doc) {
-                        if (err){
-                            throw err
-                        }else {
-                            res.render('adminpage/opinion_view', {info: doc})
-                        }
-                    })
-                }else if (req.body.view_take_on){
-                    col_opinion.find({type: '進みたい方向'}).toArray(function (err, doc) {
-                        if (err){
-                            throw err
-                        }else {
-                            res.render('adminpage/opinion_view', {info: doc})
-                        }
-                    })
-                }else if (req.body.view_opinion){
-                    col_opinion.find({type: '感想と意見'}).toArray(function (err, doc) {
-                        if (err){
-                            throw err
-                        }else {
-                            res.render('adminpage/opinion_view', {info: doc})
-                        }
-                    })
+        if (req.body.logout){
+            req.session.destroy(function () {
+                console.log('user logout');
+                res.redirect('/login')
+            })
+        }else if (req.body.admin || req.body.back){
+            res.redirect('/admin')
+        }else {
+            db.open(function (err, db) {
+                if (err){
+                    throw err
                 }else {
-                    col_opinion.find({user_id: req.body.staff_id}).toArray(function (err, doc) {
-                        if (err){
-                            throw err
-                        }else {
-                            res.render('adminpage/opinion_view', {info: doc})
-                        }
-                    })
+                    var col_opinion = db.collection('opinion');
+
+                    if(req.body.view_all){
+                        col_opinion.find().toArray(function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                res.render('adminpage/opinion_view', {info: doc})
+                            }
+                        })
+                    }else if (req.body.view_demand){
+                        col_opinion.find({type: '要望'}).toArray(function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                res.render('adminpage/opinion_view', {info: doc})
+                            }
+                        })
+                    }else if (req.body.view_take_on){
+                        col_opinion.find({type: '進みたい方向'}).toArray(function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                res.render('adminpage/opinion_view', {info: doc})
+                            }
+                        })
+                    }else if (req.body.view_opinion){
+                        col_opinion.find({type: '感想と意見'}).toArray(function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                res.render('adminpage/opinion_view', {info: doc})
+                            }
+                        })
+                    }else {
+                        col_opinion.find({user_id: req.body.staff_id}).toArray(function (err, doc) {
+                            if (err){
+                                throw err
+                            }else {
+                                res.render('adminpage/opinion_view', {info: doc})
+                            }
+                        })
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 });
 
